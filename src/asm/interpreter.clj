@@ -54,16 +54,3 @@
                 (recur (+ eip (apply (partial jnz registers) opcodes)) registers eip-stack)
                 (or (= :nop instruction) (= :label instruction))
                 (recur (inc eip) registers eip-stack)))))))
-
-(interpret [[:mov :a 5]
-            [:inc :a]
-            [:nop]
-            [:mov :b :a]
-            [:dec :b]
-            [:jmp :foo]
-            [:mul :a :b]
-            [:mov :c :b]
-            [:add :a :c]
-            [:label :foo]
-            [:end]
-            [:inc :a]])
