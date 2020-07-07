@@ -10,7 +10,6 @@
     (Integer/parseInt (str x))))
 
 (defn parse-msg [instruction]
-  (println "instruction: " instruction)
   (into [(keyword (subs instruction 0 3))]
         (let [input (map identity (subs instruction 4))]
           (loop [to-parse input
@@ -30,19 +29,30 @@
                   (and (not in-quote?) (= i \;)) (conj res (get-value current-string))
                   :else (recur (rest to-parse) res in-quote? (str current-string (str i))))))))))
 
+(defn- drop-last-char [s]
+  (subs s 0 (dec (count s))))
+
 (defn to-keywords [instructions]
   (let [[instruction op1 op2] (str/split instructions #" ")]
-    (if (= "msg" instruction)
-      (parse-msg instructions)
-      (cond-> [(keyword instruction)]
-              (not (nil? op1)) (conj (get-value op1))
-              (not (nil? op2)) (conj (get-value op2))))))
+    (cond (= "msg" instruction) (parse-msg instructions)
+          (and (nil? op1) (nil? op2) (str/ends-with? instruction ":")) [:label (keyword (drop-last-char instruction))]
+          :else                (cond-> [(keyword instruction)]
+                                  (not (nil? op1)) (conj (get-value op1))
+                                  (not (nil? op2)) (conj (get-value op2))))))
 
 (defn scrub-comments [s]
   (if (and (not (str/starts-with? s "msg"))
            (str/includes? s ";"))
     (str/trimr (subs s 0 (str/index-of s ";")))
     s))
+
+(defn build-symbol-table [asm]
+  (reduce (fn [a [i ix]]
+            (if (= (first ix) :label)
+              (assoc a (second ix) i)
+              a))
+          {}
+          (map vector (range) asm)))
 
 (defn parse [asm]
   (->> (str/split-lines asm)
@@ -52,13 +62,3 @@
        (remove #(str/starts-with? % ";"))
        (map to-keywords)))
 
-(clojure.pprint/pprint
-  (parse "; my first program
-          mov a 5
-          inc a     ; increment a
-          call foo
-          msg '(5+1)/2 = ;' a ; another comment.
-          end
-          foo:
-          div a 2
-          ret"))

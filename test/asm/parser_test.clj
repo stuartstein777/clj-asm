@@ -12,7 +12,15 @@
   (testing "[dec a] to [:dec :a]"
     (is (= [:dec :a] (to-keywords "dec a"))))
   (testing "[sub x y] to [:sub :x :y]"
-    (is (= [:sub :x :y] (to-keywords "sub x y")))))
+    (is (= [:sub :x :y] (to-keywords "sub x y"))))
+  (testing "[jne lbl] to [:jne :lbl]"
+    (is (= [:jne :lbl] (to-keywords "jne lbl"))))
+  (testing "[function:] to [:lbl function]"
+    (is (= [:label :function] (to-keywords "function:"))))
+  (testing "[ret] to [:ret]"
+    (is (= [:ret] (to-keywords "ret"))))
+  (testing "[end] to [:end]"
+    (is (= [:end] (to-keywords "end")))))
 
 (deftest is-register?-tests
   (testing "a should return true"
@@ -28,7 +36,7 @@
             [:inc :a]
             [:call :function]
             [:end]
-            [(keyword "function:")]
+            [:label :function]
             [:div :a 2]
             [:ret]]
            (parse "; my first program
@@ -45,7 +53,7 @@
             [:call :foo]
             [:msg "(5+1)/2 = ;" :a]
             [:end]
-            [(keyword "foo:")]
+            [:label :foo]
             [:div :a 2]
             [:ret]]
            (parse "; my first program
@@ -78,8 +86,11 @@
             " is greater than "
             :b] (parse-msg "msg '(5+1)/2 = ' a ' is greater than ' b ; a comment")))))
 
-
 (deftest scrubbing-comments-tests
   (is (= "inc a" (scrub-comments "inc a   ; some comment")))
   (testing "we don't scrub comments from msg fields"
     (is (= "msg '(5+1)/2 = ' a ; another comment." (scrub-comments "msg '(5+1)/2 = ' a ; another comment.")))))
+
+(deftest symbol-table-tests
+  (is (= {:foo 5}
+         (build-symbol-table [[:mov :a 5] [:inc :a] [:call :foo] [:msg "(5+1)/2 =" :a] [:end] [:label :foo] [:div :a 2] [:ret]]))))
