@@ -26,7 +26,6 @@
 ;; Handle binary operations
 ;;=======================================================================================================
 (defn binary-op [registers op x y]
-  (println "in binary op")
   (assoc registers x (op (get registers x) (get-value registers y))))
 
 ;;=======================================================================================================
