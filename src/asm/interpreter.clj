@@ -15,14 +15,26 @@
 (defn binary-op [registers op x y]
   (assoc registers x (op (get registers x) (get-value registers y))))
 
+;;=======================================================================================================
+;; jump forward or backwards y steps if x is not zero.
+;; x and y can both be registers so we get their value via (get-value).
+;;=======================================================================================================
 (defn jnz [registers x y]
   (if (zero? (get-value registers x))
     1
     (get-value registers y)))
 
+;;=======================================================================================================
+;; jump to a label location. We find the label location from the symbol table.
+;;=======================================================================================================
+
 (defn jmp [symbol-table label]
   (inc (get symbol-table label)))
 
+;;=======================================================================================================
+;; compare x and y and store if x > y, x = y or x < y
+;; the result is stored in internal-registers :cmp register.
+;;=======================================================================================================
 (defn cmp [registers x y]
   (let [x-val (if (keyword? x) (get registers x) x)
         y-val (if (keyword? y) (get registers y) y)]
@@ -30,6 +42,16 @@
                                                          (> x-val y-val) (conj :gt)
                                                          (< x-val y-val) (conj :lt)))))
 
+;;=======================================================================================================
+;; After a cmp either the comparison will be in one of three states, :eq, :gt, :lt
+;;
+;; Therefore, to check if we need to jump or not, we simple have to pass in a set of allowed states.
+;; e.g,
+;; jge :: we would pass in #{:eq :gt}, then we can check if the cmp register is either :eq or :gt.
+;;
+;; If it is in the set then we can return the location for the label (lbl) in the symbol table.
+;; Otherwise we just return the eip incremented so we advance to the next instruction.
+;;=======================================================================================================
 (defn cmp-jmp [registers symbol-table eip valid-comps lbl]
   (if (nil? (valid-comps (:cmp (:internal-registers registers))))
     (inc eip)
