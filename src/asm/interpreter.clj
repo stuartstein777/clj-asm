@@ -30,10 +30,10 @@
                                                          (> x-val y-val) (conj :gt)
                                                          (< x-val y-val) (conj :lt)))))
 
-(defn cmp-jmp [registers symbol-table eip comparer x lbl]
-  (if (comparer x (:cmp (:internal-registers registers)))
-    (lbl symbol-table)
-    (inc eip)))
+(defn cmp-jmp [registers symbol-table eip valid-comps lbl]
+  (if (nil? (valid-comps (:cmp (:internal-registers registers))))
+    (inc eip)
+    (lbl symbol-table)))
 
 (defn interpret [instructions]
   (let [symbol-table (build-symbol-table instructions)]
@@ -43,7 +43,6 @@
       (if (= eip (count instructions))
         registers
         (let [[instruction & opcodes] (nth instructions eip)]
-          (println instruction " :: " registers)
           (cond (= :end instruction)
                 registers
                 (= :mov instruction) (recur (inc eip) (apply (partial mov registers) opcodes) eip-stack)
@@ -59,7 +58,10 @@
                 (= :cmp instruction) (recur (inc eip)  (apply (partial cmp registers) opcodes) eip-stack)
                 (= :jmp instruction) (recur (apply (partial jmp symbol-table) opcodes) registers eip-stack)
                 (= :jnz instruction) (recur (+ eip (apply (partial jnz registers) opcodes)) registers eip-stack)
-                (= :jne instruction) (recur (apply (partial cmp-jmp registers symbol-table eip not= :eq) opcodes) registers eip-stack)
-                (= :je instruction)  (recur (apply (partial cmp-jmp registers symbol-table eip = :eq) opcodes) registers eip-stack)
+                (= :jne instruction) (recur (apply (partial cmp-jmp registers symbol-table eip #{:lt :gt}) opcodes) registers eip-stack)
+                (= :je instruction)  (recur (apply (partial cmp-jmp registers symbol-table eip #{:eq}) opcodes) registers eip-stack)
+                (= :jge instruction) (recur (apply (partial cmp-jmp registers symbol-table eip #{:eq :gt}) opcodes) registers eip-stack)
+                (= :jg instruction) (recur (apply (partial cmp-jmp registers symbol-table eip #{:gt}) opcodes) registers eip-stack)
+                (= :jl instruction) (recur (apply (partial cmp-jmp registers symbol-table eip #{:lt}) opcodes) registers eip-stack)
+                (= :jle instruction) (recur (apply (partial cmp-jmp registers symbol-table eip #{:lt :eq}) opcodes) registers eip-stack)
                 (or (= :nop instruction) (= :label instruction)) (recur (inc eip) registers eip-stack)))))))
-

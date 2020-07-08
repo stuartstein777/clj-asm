@@ -64,4 +64,169 @@
                                        [:inc :c]
                                        [:dec :a]
                                        [:jnz :a -1]
-                                       [:end])))))
+                                       [:end]))))
+
+  (testing "jne jumps"
+    (is (= {:a 5 :b 6 :internal-registers {:cmp :lt}}
+           (interpret [[:mov :a 5]
+                       [:mov :b 6]
+                       [:cmp :a :b]
+                       [:jne :foo]
+                       [:mul :a :b]
+                       [:end]
+                       [:label :foo]
+                       [:end]]))))
+
+  (testing "jne does not jump"
+    (is (= {:a 36 :b 6 :internal-registers {:cmp :eq}}
+           (interpret [[:mov :a 6]
+                       [:mov :b 6]
+                       [:cmp :a :b]
+                       [:jne :foo]
+                       [:mul :a :b]
+                       [:end]
+                       [:label :foo]
+                       [:end]]))))
+
+  (testing "je jumps"
+    (is (= {:a 30 :b 6 :internal-registers {:cmp :lt}}
+           (interpret [[:mov :a 5]
+                       [:mov :b 6]
+                       [:cmp :a :b]
+                       [:je :foo]
+                       [:mul :a :b]
+                       [:end]
+                       [:label :foo]
+                       [:end]]))))
+
+  (testing "je does not jump"
+    (is (= {:a 6 :b 6 :internal-registers {:cmp :eq}}
+           (interpret [[:mov :a 6]
+                       [:mov :b 6]
+                       [:cmp :a :b]
+                       [:je :foo]
+                       [:mul :a :b]
+                       [:end]
+                       [:label :foo]
+                       [:end]]))))
+
+  (testing "jge jumps on greater than"
+    (is (= {:a 7 :b 6 :internal-registers {:cmp :gt}}
+           (interpret [[:mov :a 7]
+                       [:mov :b 6]
+                       [:cmp :a :b]
+                       [:jge :foo]
+                       [:mul :a :b]
+                       [:end]
+                       [:label :foo]
+                       [:end]]))))
+
+  (testing "jge jumps on equality"
+    (is (= {:a 7 :b 7 :internal-registers {:cmp :eq}}
+           (interpret [[:mov :a 7]
+                       [:mov :b 7]
+                       [:cmp :a :b]
+                       [:jge :foo]
+                       [:mul :a :b]
+                       [:end]
+                       [:label :foo]
+                       [:end]]))))
+
+  (testing "jge does not jump"
+    (is (= {:a 30 :b 6 :internal-registers {:cmp :lt}}
+           (interpret [[:mov :a 5]
+                       [:mov :b 6]
+                       [:cmp :a :b]
+                       [:jge :foo]
+                       [:mul :a :b]
+                       [:end]
+                       [:label :foo]
+                       [:end]]))))
+
+  (testing "jg jumps"
+    (is (= {:a 7 :b 6 :internal-registers {:cmp :gt}}
+           (interpret [[:mov :a 7]
+                       [:mov :b 6]
+                       [:cmp :a :b]
+                       [:jg :foo]
+                       [:mul :a :b]
+                       [:end]
+                       [:label :foo]
+                       [:end]]))))
+
+  (testing "jg does not jump"
+    (is (= {:a 36 :b 6 :internal-registers {:cmp :eq}}
+           (interpret [[:mov :a 6]
+                       [:mov :b 6]
+                       [:cmp :a :b]
+                       [:jg :foo]
+                       [:mul :a :b]
+                       [:end]
+                       [:label :foo]
+                       [:end]]))))
+
+  (testing "jle jumps on equality"
+    (is (= {:a 6 :b 6 :internal-registers {:cmp :eq}}
+           (interpret [[:mov :a 6]
+                       [:mov :b 6]
+                       [:cmp :a :b]
+                       [:jle :foo]
+                       [:mul :a :b]
+                       [:end]
+                       [:label :foo]
+                       [:end]]))))
+
+  (testing "jle jumps on less than"
+    (is (= {:a 5 :b 6 :internal-registers {:cmp :lt}}
+           (interpret [[:mov :a 5]
+                       [:mov :b 6]
+                       [:cmp :a :b]
+                       [:jle :foo]
+                       [:mul :a :b]
+                       [:end]
+                       [:label :foo]
+                       [:end]]))))
+
+  (testing "jle does not jump"
+    (is (= {:a 6 :b 6 :internal-registers {:cmp :eq}}
+           (interpret [[:mov :a 6]
+                       [:mov :b 6]
+                       [:cmp :a :b]
+                       [:jle :foo]
+                       [:mul :a :b]
+                       [:end]
+                       [:label :foo]
+                       [:end]]))))
+
+  (testing "jl jumps on less than"
+    (is (= {:a 5 :b 6 :internal-registers {:cmp :lt}}
+           (interpret [[:mov :a 5]
+                       [:mov :b 6]
+                       [:cmp :a :b]
+                       [:jl :foo]
+                       [:mul :a :b]
+                       [:end]
+                       [:label :foo]
+                       [:end]]))))
+
+  (testing "jl does not jump"
+    (is (= {:a 36 :b 6 :internal-registers {:cmp :eq}}
+           (interpret [[:mov :a 6]
+                       [:mov :b 6]
+                       [:cmp :a :b]
+                       [:jl :foo]
+                       [:mul :a :b]
+                       [:end]
+                       [:label :foo]
+                       [:end]]))))
+
+  (testing "jl does not jump on greater than"
+    (is (= {:a 42 :b 6 :internal-registers {:cmp :gt}}
+           (interpret [[:mov :a 7]
+                       [:mov :b 6]
+                       [:cmp :a :b]
+                       [:jl :foo]
+                       [:mul :a :b]
+                       [:end]
+                       [:label :foo]
+                       [:end]])))))
