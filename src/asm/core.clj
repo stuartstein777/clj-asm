@@ -17,25 +17,25 @@
 ;; DONE: cmp x y    ::    compares x (either value or register) with y (either value or register). Result is used.
 ;; DONE: jne lbl    ::    jump to the label lbl if the values of the previous cmp command were not equal.
 ;; DONE: je lbl     ::    jump to the label lbl if the values of the previous cmp command were equal.
-;; TODO: jge lbl    ::    jump to the label lbl if x >= y in previous cmp command.
-;; TODO: jg lbl     ::    jump to the label lbl if x > y in previous cmp command.
-;; TODO: jle lbl    ::    jump to the label lbl if x <= y in previous cmp command.
-;; TODO: jl lbl     ::    jump to the label lbl if x < y in previous cmp command.
+;; DONE: jge lbl    ::    jump to the label lbl if x >= y in previous cmp command.
+;; DONE: jg lbl     ::    jump to the label lbl if x > y in previous cmp command.
+;; DONE: jle lbl    ::    jump to the label lbl if x <= y in previous cmp command.
+;; DONE: jl lbl     ::    jump to the label lbl if x < y in previous cmp command.
 ;; DONE: xor x y    ::    bit-xor x with y and store the result in x.
 ;; DONE: or x y     ::    bit-or x with y and store the result in x.
 ;; DONE: and x y    ::    bit-and x with y and store the result in x.
 ;; DONE nop         ::    do nothing.
-;; TODO: call lbl   ::    call the subroutine identified by lbl. When a ret is found in a subroutine, the eip should
-;; TODO:                  return to the instruction next to this call command.
-;; TODO: ret        ::    when a ret is found in a subroutine, the eip should return to the instruction that called the
-;; TODO:                  function.
+;; DONE: call lbl   ::    call the subroutine identified by lbl. When a ret is found in a subroutine, the eip should
+;;                        return to the instruction next to this call command.
+;; DONE: ret        ::    when a ret is found in a subroutine, the eip should return to the instruction that called the
+;;                        function.
 ;; TODO: msg 'reg'  ::    this stores the output of the program. It may contain text strings (delimited by single
 ;; TODO:                  quotes) and registers, number of arguments isn't limited.
 ;;                        Example: msg 'a: ', a, ' is not equal to ', b
 ;;                        Given, :a = 5 and :b = 6.
 ;;                        This would store "5 is not equal to 6"
 ;; DONE: end        ::    indicates the program ends correctly, so output is returned. If this command isn't encountered
-;; TODO:                  the program should return -1
+;;                        the program should return -1
 ;; DONE;            ::    comments.
 ;; DONE:            ::    parser to parse from string to vector of instructions
 ;; DONE: Parser to parse out labels and eip locations into map

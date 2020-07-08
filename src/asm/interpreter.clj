@@ -57,13 +57,16 @@
     (inc eip)
     (lbl symbol-table)))
 
+(defn call [symbol-table label]
+  (label symbol-table))
+
 (defn interpret [instructions]
   (let [symbol-table (build-symbol-table instructions)]
     (loop [eip 0
            registers {}
            eip-stack []]
       (if (= eip (count instructions))
-        registers
+        (assoc-in registers [:internal-registers :exit-code] -1)
         (let [[instruction & opcodes] (nth instructions eip)]
           (cond (= :end instruction)
                 registers
@@ -86,4 +89,18 @@
                 (= :jg instruction) (recur (apply (partial cmp-jmp registers symbol-table eip #{:gt}) opcodes) registers eip-stack)
                 (= :jl instruction) (recur (apply (partial cmp-jmp registers symbol-table eip #{:lt}) opcodes) registers eip-stack)
                 (= :jle instruction) (recur (apply (partial cmp-jmp registers symbol-table eip #{:lt :eq}) opcodes) registers eip-stack)
+                (= :call instruction) (let [call-location (apply (partial call symbol-table) opcodes)]
+                                        (recur call-location registers (conj eip-stack eip)))
+                ;; if we hit a ret and have no pointer to the location to return to, exit with exit code -1
+                (= :ret instruction) (if (nil? eip-stack)
+                                       (assoc-in registers [:internal-registers :exit-code] -1)
+                                       (recur (inc (last eip-stack)) registers (butlast eip-stack)))
                 (or (= :nop instruction) (= :label instruction)) (recur (inc eip) registers eip-stack)))))))
+
+(interpret [[:mov :a 7]                                     ; 0
+            [:call :foo]                                    ; 1
+            [:mul :a 7]                                     ; 2
+            [:end]                                          ; 3
+            [:label :foo]                                   ; 4
+            [:inc :a]                                       ; 5
+            [:ret]])                                        ; 6

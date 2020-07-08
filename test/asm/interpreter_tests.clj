@@ -40,7 +40,8 @@
                             [:inc :a]
                             [:inc :a]
                             [:label :foo]
-                            [:dec :a]])))
+                            [:dec :a]
+                            [:end]])))
 
   (is (= {:a 0 :b 2 :c 1} (interpret '([:mov :a 0]
                                        [:inc :a]
@@ -66,7 +67,11 @@
                                        [:jnz :a -1]
                                        [:end]))))
 
-  (testing "jne jumps"
+  (testing "mul"
+    (is (= {:a 25} (interpret [[:mov :a 5]
+                               [:mul :a 5]
+                               [:end]]))))
+    (testing "jne jumps"
     (is (= {:a 5 :b 6 :internal-registers {:cmp :lt}}
            (interpret [[:mov :a 5]
                        [:mov :b 6]
@@ -229,4 +234,23 @@
                        [:mul :a :b]
                        [:end]
                        [:label :foo]
-                       [:end]])))))
+                       [:end]]))))
+
+  (testing "call"
+    (is (= {:a 7}
+           (interpret [[:mov :a 7]
+                       [:call :foo]
+                       [:mul :a 7]
+                       [:end]
+                       [:label :foo]
+                       [:end]]))))
+
+  (testing "call and ret"
+    (is (= {:a 56}
+           (interpret [[:mov :a 7]
+                       [:call :foo]
+                       [:mul :a 7]
+                       [:end]
+                       [:label :foo]
+                       [:inc :a]
+                       [:ret]])))))
