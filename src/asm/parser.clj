@@ -47,6 +47,7 @@
     s))
 
 (defn build-symbol-table [asm]
+  (println "building symbol table.")
   (reduce (fn [a [i ix]]
             (if (= (first ix) :label)
               (assoc a (second ix) i)

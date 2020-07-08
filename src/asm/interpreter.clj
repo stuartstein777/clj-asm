@@ -15,6 +15,14 @@
 (defn binary-op [registers op x y]
   (assoc registers x (op (get registers x) (get-value registers y))))
 
+(defn cmp-jump-predicates [jump-instruction]
+  (cond (= :jge jump-instruction) #{:eq :gt}
+        (= :jg jump-instruction) #{:gt}
+        (= :jne jump-instruction) #{:lt :gt}
+        (= :je jump-instruction) #{:eq}
+        (= :jle jump-instruction) #{:eq :lt}
+        (= :jl jump-instruction) #{:lt}))
+
 ;;=======================================================================================================
 ;; jump forward or backwards y steps if x is not zero.
 ;; x and y can both be registers so we get their value via (get-value).
@@ -58,7 +66,6 @@
     (lbl symbol-table)))
 
 (defn call [symbol-table label]
-  (println "looking up " label " in symbol table :: " (label symbol-table))
   (label symbol-table))
 
 (defn interpret [instructions]
@@ -84,12 +91,14 @@
                 (= :cmp instruction) (recur (inc eip)  (apply (partial cmp registers) opcodes) eip-stack)
                 (= :jmp instruction) (recur (apply (partial jmp symbol-table) opcodes) registers eip-stack)
                 (= :jnz instruction) (recur (+ eip (apply (partial jnz registers) opcodes)) registers eip-stack)
-                (= :jne instruction) (recur (apply (partial cmp-jmp registers symbol-table eip #{:lt :gt}) opcodes) registers eip-stack)
-                (= :je instruction)  (recur (apply (partial cmp-jmp registers symbol-table eip #{:eq}) opcodes) registers eip-stack)
-                (= :jge instruction) (recur (apply (partial cmp-jmp registers symbol-table eip #{:eq :gt}) opcodes) registers eip-stack)
-                (= :jg instruction) (recur (apply (partial cmp-jmp registers symbol-table eip #{:gt}) opcodes) registers eip-stack)
-                (= :jl instruction) (recur (apply (partial cmp-jmp registers symbol-table eip #{:lt}) opcodes) registers eip-stack)
-                (= :jle instruction) (recur (apply (partial  cmp-jmp registers symbol-table eip #{:lt :eq}) opcodes) registers eip-stack)
+                (not (nil? (#{:jne :je :jge :jg :jl :jle} instruction)))
+                (recur (apply (partial cmp-jmp
+                                       registers
+                                       symbol-table
+                                       eip
+                                       (cmp-jump-predicates instruction)) opcodes)
+                       registers
+                       eip-stack)
                 (= :call instruction) (let [call-location (apply (partial call symbol-table) opcodes)]
                                         (recur call-location registers (conj eip-stack eip)))
                 ;; if we hit a ret and have no pointer to the location to return to, exit with exit code -1
@@ -97,23 +106,3 @@
                                        (assoc-in registers [:internal-registers :exit-code] -1)
                                        (recur (inc (last eip-stack)) registers (butlast eip-stack)))
                 (or (= :nop instruction) (= :label instruction)) (recur (inc eip) registers eip-stack)))))))
-
-(interpret [[:mov :a 0]                                     ; 0
-            [:mov :b 1]                                     ; 1
-            [:mov :c 2]                                     ; 2
-            [:call (keyword "foo")]                        ; 3
-            [:mul :c :b]                                    ; 4
-            [:cmp :a :b]                                    ; 5
-            [:jne 2]                                        ; 6
-            [:mul :c 10]                                    ; 7
-            [:nop]                                          ; 8
-            [:nop]                                          ; 9
-            [:call (keyword "bar")]                        ; 10
-            [:xor :b :b]                                    ; 11
-            [:end]                                          ; 12
-            [:label :foo]                                   ; 13
-            [:inc :b]                                       ; 14
-            [:ret]                                          ; 15
-            [:label :bar]                                   ; 16
-            [:inc :a]                                       ; 17
-            [:ret]])                                        ; 18

@@ -253,4 +253,26 @@
                        [:end]
                        [:label :foo]
                        [:inc :a]
+                       [:ret]]))))
+  (testing "complex 1"
+    (is (= {:a 7, :b 0, :c 3, :internal-registers {:cmp :lt}}
+           (interpret [[:mov :a 0]
+                       [:mov :b 1]
+                       [:mov :c 2]
+                       [:call :foo]
+                       [:mul :c :b]
+                       [:cmp :a :b]
+                       [:jne :quax]
+                       [:mul :c 10]
+                       [:label :quax]
+                       [:nop]
+                       [:call :bar]
+                       [:xor :b :b]
+                       [:end]
+                       [:label :foo]
+                       [:inc :b]
+                       [:ret]
+                       [:label :bar]
+                       [:add :a 7]
+                       [:sub :c 1]
                        [:ret]])))))
