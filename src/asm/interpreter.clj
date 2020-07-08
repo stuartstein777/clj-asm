@@ -129,9 +129,10 @@
 ;; The interpreter.
 ;;
 ;; Recursively handle each instruction in our set of instructions.
+;; Keep track of the eip.
+;; eip-stack is a vector containing the return instruction pointers for call / ret
 ;; Exit when either we hit an :end or the eip is beyond the last instruction (when this occurs return -1.
 ;; as the exit code).
-;;
 ;;=======================================================================================================
 (defn interpret [instructions]
   (let [symbol-table (build-symbol-table instructions)]
@@ -140,27 +141,27 @@
            eip-stack []]
       (if (= eip (count instructions))
         (assoc-in registers [:internal-registers :exit-code] -1)
-        (let [[instruction & opcodes] (nth instructions eip)]
+        (let [[instruction & args] (nth instructions eip)]
           (cond (= :end instruction)
                 registers
                 (= :mov instruction)
-                (recur (inc eip) (apply (partial mov registers) opcodes) eip-stack)
+                (recur (inc eip) (apply (partial mov registers) args) eip-stack)
                 (is-unary-operation? instruction)
-                (recur (inc eip) (apply (partial unary-op registers (get-unary-operation instruction)) opcodes) eip-stack)
+                (recur (inc eip) (apply (partial unary-op registers (get-unary-operation instruction)) args) eip-stack)
                 (is-binary-operation? instruction)
-                (recur (inc eip) (apply (partial binary-op registers (get-binary-operations instruction)) opcodes) eip-stack)
+                (recur (inc eip) (apply (partial binary-op registers (get-binary-operations instruction)) args) eip-stack)
                 (= :cmp instruction)
-                (recur (inc eip)  (apply (partial cmp registers) opcodes) eip-stack)
+                (recur (inc eip)  (apply (partial cmp registers) args) eip-stack)
                 (= :jmp instruction)
-                (recur (apply (partial jmp symbol-table) opcodes) registers eip-stack)
+                (recur (apply (partial jmp symbol-table) args) registers eip-stack)
                 (= :jnz instruction)
-                (recur (+ eip (apply (partial jnz registers) opcodes)) registers eip-stack)
+                (recur (+ eip (apply (partial jnz registers) args)) registers eip-stack)
                 (is-cmp-jmp? instruction)
-                (recur (apply (partial cmp-jmp registers symbol-table eip (cmp-jump-predicates instruction)) opcodes)
+                (recur (apply (partial cmp-jmp registers symbol-table eip (cmp-jump-predicates instruction)) args)
                         registers
                         eip-stack)
                 (= :call instruction)
-                (let [call-location (apply (partial call symbol-table) opcodes)]
+                (let [call-location (apply (partial call symbol-table) args)]
                   (recur call-location registers (conj eip-stack eip)))
                 (= :ret instruction) (if (nil? eip-stack)
                                        (assoc-in registers [:internal-registers :exit-code] -1)
