@@ -1,5 +1,6 @@
 (ns asm.interpreter
-  (:require [asm.parser :refer [build-symbol-table]]))
+  (:require [asm.parser :refer [build-symbol-table]]
+            [asm.helpers :refer :all]))
 
 ;;=======================================================================================================
 ;; if op is  register, returns the value from the registers.
@@ -85,24 +86,6 @@
                                                          (< x-val y-val) (conj :lt)))))
 
 ;;=======================================================================================================
-;; Returns true if the specified instruction is a cmp jmp instruction, otherwise false.
-;;=======================================================================================================
-(defn is-cmp-jmp? [instruction]
-  (not (nil? (#{:jne :je :jge :jg :jle :jl} instruction))))
-
-;;=======================================================================================================
-;; Returns true if the specified instruction is a binary instruction, otherwise false.
-;;=======================================================================================================
-(defn is-binary-operation? [instruction]
-  (not (nil? (#{:mul :add :sub :div :xor :and :or} instruction))))
-
-;;=======================================================================================================
-;; Returns true if the specified instruction is a unary instruction, otherwise false.
-;;=======================================================================================================
-(defn is-unary-operation? [instruction]
-  (not (nil? (#{:inc :dec} instruction))))
-
-;;=======================================================================================================
 ;; After a cmp either the comparison will be in one of three states, :eq, :gt, :lt
 ;;
 ;; Therefore, to check if we need to jump or not, we simple have to pass in a set of allowed states.
@@ -140,14 +123,16 @@
            eip-stack []]
       (if (= eip (count instructions))
         (assoc-in registers [:internal-registers :exit-code] -1)
+        ; get the current instruction in the instructions list at the eip location and
+        ; destructure into the instruction and its arguments.
         (let [[instruction & args] (nth instructions eip)]
           (cond (= :end instruction)
                 registers
                 (= :mov instruction)
                 (recur (inc eip) (apply (partial mov registers) args) eip-stack)
-                (is-unary-operation? instruction)
+                (in-set? #{:inc :dec} instruction)
                 (recur (inc eip) (apply (partial unary-op registers (get-unary-operation instruction)) args) eip-stack)
-                (is-binary-operation? instruction)
+                (in-set? #{:mul :add :sub :div :xor :and :or} instruction)
                 (recur (inc eip) (apply (partial binary-op registers (get-binary-operations instruction)) args) eip-stack)
                 (= :cmp instruction)
                 (recur (inc eip)  (apply (partial cmp registers) args) eip-stack)
@@ -155,7 +140,7 @@
                 (recur (apply (partial jmp symbol-table) args) registers eip-stack)
                 (= :jnz instruction)
                 (recur (+ eip (apply (partial jnz registers) args)) registers eip-stack)
-                (is-cmp-jmp? instruction)
+                (in-set? #{:jne :je :jge :jg :jle :jl} instruction)
                 (recur (apply (partial cmp-jmp registers symbol-table eip (cmp-jump-predicates instruction)) args)
                         registers
                         eip-stack)
