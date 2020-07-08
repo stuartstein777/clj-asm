@@ -58,6 +58,7 @@
     (lbl symbol-table)))
 
 (defn call [symbol-table label]
+  (println "looking up " label " in symbol table :: " (label symbol-table))
   (label symbol-table))
 
 (defn interpret [instructions]
@@ -88,7 +89,7 @@
                 (= :jge instruction) (recur (apply (partial cmp-jmp registers symbol-table eip #{:eq :gt}) opcodes) registers eip-stack)
                 (= :jg instruction) (recur (apply (partial cmp-jmp registers symbol-table eip #{:gt}) opcodes) registers eip-stack)
                 (= :jl instruction) (recur (apply (partial cmp-jmp registers symbol-table eip #{:lt}) opcodes) registers eip-stack)
-                (= :jle instruction) (recur (apply (partial cmp-jmp registers symbol-table eip #{:lt :eq}) opcodes) registers eip-stack)
+                (= :jle instruction) (recur (apply (partial  cmp-jmp registers symbol-table eip #{:lt :eq}) opcodes) registers eip-stack)
                 (= :call instruction) (let [call-location (apply (partial call symbol-table) opcodes)]
                                         (recur call-location registers (conj eip-stack eip)))
                 ;; if we hit a ret and have no pointer to the location to return to, exit with exit code -1
@@ -97,10 +98,22 @@
                                        (recur (inc (last eip-stack)) registers (butlast eip-stack)))
                 (or (= :nop instruction) (= :label instruction)) (recur (inc eip) registers eip-stack)))))))
 
-(interpret [[:mov :a 7]                                     ; 0
-            [:call :foo]                                    ; 1
-            [:mul :a 7]                                     ; 2
-            [:end]                                          ; 3
-            [:label :foo]                                   ; 4
-            [:inc :a]                                       ; 5
-            [:ret]])                                        ; 6
+(interpret [[:mov :a 0]                                     ; 0
+            [:mov :b 1]                                     ; 1
+            [:mov :c 2]                                     ; 2
+            [:call (keyword "foo")]                        ; 3
+            [:mul :c :b]                                    ; 4
+            [:cmp :a :b]                                    ; 5
+            [:jne 2]                                        ; 6
+            [:mul :c 10]                                    ; 7
+            [:nop]                                          ; 8
+            [:nop]                                          ; 9
+            [:call (keyword "bar")]                        ; 10
+            [:xor :b :b]                                    ; 11
+            [:end]                                          ; 12
+            [:label :foo]                                   ; 13
+            [:inc :b]                                       ; 14
+            [:ret]                                          ; 15
+            [:label :bar]                                   ; 16
+            [:inc :a]                                       ; 17
+            [:ret]])                                        ; 18
