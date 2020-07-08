@@ -32,6 +32,12 @@
                                       (> x-val y-val) (conj :gt)
                                       (< x-val y-val) (conj :lt)))))
 
+; jump to the label lbl if cmp is not :eq
+(defn jne [registers internal-registers symbol-table lbl]
+  (if (:cmp ))
+
+    )
+
 (defn interpret [instructions]
   (let [symbol-table (build-symbol-table instructions)]
     (loop [eip          0
@@ -69,9 +75,16 @@
                 (recur (+ eip (apply (partial jnz registers) opcodes)) registers eip-stack internal-registers)
                 (= :cmp instruction)
                 (recur (inc eip) registers eip-stack (apply (partial cmp registers internal-registers) opcodes))
+                (= :jne instruction)
+                (recur (apply (partial jne registers internal-registers symbol-table) opcodes) registers eip-sack internal-registers)
                 (or (= :nop instruction) (= :label instruction))
                 (recur (inc eip) registers eip-stack internal-registers)))))))
 
 (interpret [[:mov :a 6]
-            [:xor :a :a]])
+            [:mov :b 7]
+            [:cmp :a :b]
+            [:jne :foo]
+            [:mul :a :b]
+            [:label :foo]
+            [:inc :a]])
 
