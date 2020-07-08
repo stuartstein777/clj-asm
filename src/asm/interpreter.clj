@@ -1,20 +1,37 @@
 (ns asm.interpreter
   (:require [asm.parser :refer [build-symbol-table]]))
 
+;;=======================================================================================================
+;; if op is  register, returns the value from the registers.
+;; Otherwise return the op (as it's a value not a register).
+;;=======================================================================================================
 (defn get-value [registers op]
   (if (keyword? op)
     (get registers op)
     op))
 
+;;=======================================================================================================
+;; Handle the mov instruction.
+;;=======================================================================================================
 (defn mov [registers x y]
   (assoc registers x (get-value registers y)))
 
+;;=======================================================================================================
+;; Handle unary operations
+;;=======================================================================================================
 (defn unary-op [registers op x]
   (update registers x op))
 
+;;=======================================================================================================
+;; Handle binary operations
+;;=======================================================================================================
 (defn binary-op [registers op x y]
+  (println "in binary op")
   (assoc registers x (op (get registers x) (get-value registers y))))
 
+;;=======================================================================================================
+;; Return the predicate for cmp jumps that we want the jump check to satisfy.
+;;=======================================================================================================
 (defn cmp-jump-predicates [jump-instruction]
   (cond (= :jge jump-instruction) #{:eq :gt}
         (= :jg jump-instruction) #{:gt}
@@ -22,6 +39,18 @@
         (= :je jump-instruction) #{:eq}
         (= :jle jump-instruction) #{:eq :lt}
         (= :jl jump-instruction) #{:lt}))
+
+;;=======================================================================================================
+;; Return the appropriate binary operation for the given binary instruction.
+;;=======================================================================================================
+(defn get-binary-operations [instruction]
+  (cond (= :add instruction) +
+        (= :sub instruction) -
+        (= :mul instruction) *
+        (= :div instruction) quot
+        (= :xor instruction) bit-xor
+        (= :or instruction) bit-or
+        (= :and instruction) bit-and))
 
 ;;=======================================================================================================
 ;; jump forward or backwards y steps if x is not zero.
@@ -35,7 +64,6 @@
 ;;=======================================================================================================
 ;; jump to a label location. We find the label location from the symbol table.
 ;;=======================================================================================================
-
 (defn jmp [symbol-table label]
   (inc (get symbol-table label)))
 
@@ -49,6 +77,18 @@
     (assoc-in registers [:internal-registers :cmp] (cond (= x-val y-val) (conj :eq)
                                                          (> x-val y-val) (conj :gt)
                                                          (< x-val y-val) (conj :lt)))))
+
+;;=======================================================================================================
+;; Returns true if the specified instruction is a cmp jmp instruction, otherwise false.
+;;=======================================================================================================
+(defn is-cmp-jmp? [instruction]
+  (not (nil? (#{:jne :je :jge :jg :jle :jl} instruction))))
+
+;;=======================================================================================================
+;; Returns true if the specified instruction is a binary instruction, otherwise false.
+;;=======================================================================================================
+(defn is-binary-operation? [instruction]
+  (not (nil? (#{:mul :add :sub :div :xor :and :or} instruction))))
 
 ;;=======================================================================================================
 ;; After a cmp either the comparison will be in one of three states, :eq, :gt, :lt
@@ -65,9 +105,21 @@
     (inc eip)
     (lbl symbol-table)))
 
+;;=======================================================================================================
+;; Handle call instructions.
+;; We return the eip we want to jump to from the symbol table for the given label.
+;;=======================================================================================================
 (defn call [symbol-table label]
   (label symbol-table))
 
+;;=======================================================================================================
+;; The interpreter.
+;;
+;; Recursively handle each instruction in our set of instructions.
+;; Exit when either we hit an :end or the eip is beyond the last instruction (when this occurs return -1.
+;; as the exit code).
+;;
+;;=======================================================================================================
 (defn interpret [instructions]
   (let [symbol-table (build-symbol-table instructions)]
     (loop [eip 0
@@ -78,30 +130,27 @@
         (let [[instruction & opcodes] (nth instructions eip)]
           (cond (= :end instruction)
                 registers
-                (= :mov instruction) (recur (inc eip) (apply (partial mov registers) opcodes) eip-stack)
-                (= :inc instruction) (recur (inc eip) (apply (partial unary-op registers inc) opcodes) eip-stack)
-                (= :dec instruction) (recur (inc eip) (apply (partial unary-op registers dec) opcodes) eip-stack)
-                (= :mul instruction) (recur (inc eip) (apply (partial binary-op registers *) opcodes) eip-stack)
-                (= :add instruction) (recur (inc eip) (apply (partial binary-op registers +) opcodes) eip-stack)
-                (= :sub instruction) (recur (inc eip) (apply (partial binary-op registers -) opcodes) eip-stack)
-                (= :div instruction) (recur (inc eip) (apply (partial binary-op registers quot) opcodes) eip-stack)
-                (= :xor instruction) (recur (inc eip) (apply (partial binary-op registers bit-xor) opcodes) eip-stack)
-                (= :and instruction) (recur (inc eip) (apply (partial binary-op registers bit-and) opcodes) eip-stack)
-                (= :or instruction)  (recur (inc eip) (apply (partial binary-op registers bit-or) opcodes) eip-stack)
-                (= :cmp instruction) (recur (inc eip)  (apply (partial cmp registers) opcodes) eip-stack)
-                (= :jmp instruction) (recur (apply (partial jmp symbol-table) opcodes) registers eip-stack)
-                (= :jnz instruction) (recur (+ eip (apply (partial jnz registers) opcodes)) registers eip-stack)
-                (not (nil? (#{:jne :je :jge :jg :jl :jle} instruction)))
-                (recur (apply (partial cmp-jmp
-                                       registers
-                                       symbol-table
-                                       eip
-                                       (cmp-jump-predicates instruction)) opcodes)
-                       registers
-                       eip-stack)
-                (= :call instruction) (let [call-location (apply (partial call symbol-table) opcodes)]
-                                        (recur call-location registers (conj eip-stack eip)))
-                ;; if we hit a ret and have no pointer to the location to return to, exit with exit code -1
+                (= :mov instruction)
+                (recur (inc eip) (apply (partial mov registers) opcodes) eip-stack)
+                (= :inc instruction)
+                (recur (inc eip) (apply (partial unary-op registers inc) opcodes) eip-stack)
+                (= :dec instruction)
+                (recur (inc eip) (apply (partial unary-op registers dec) opcodes) eip-stack)
+                (is-binary-operation? instruction)
+                (recur (inc eip) (apply (partial binary-op registers (get-binary-operations instruction)) opcodes) eip-stack)
+                (= :cmp instruction)
+                (recur (inc eip)  (apply (partial cmp registers) opcodes) eip-stack)
+                (= :jmp instruction)
+                (recur (apply (partial jmp symbol-table) opcodes) registers eip-stack)
+                (= :jnz instruction)
+                (recur (+ eip (apply (partial jnz registers) opcodes)) registers eip-stack)
+                (is-cmp-jmp? instruction)
+                (recur (apply (partial cmp-jmp registers symbol-table eip (cmp-jump-predicates instruction)) opcodes)
+                        registers
+                        eip-stack)
+                (= :call instruction)
+                (let [call-location (apply (partial call symbol-table) opcodes)]
+                  (recur call-location registers (conj eip-stack eip)))
                 (= :ret instruction) (if (nil? eip-stack)
                                        (assoc-in registers [:internal-registers :exit-code] -1)
                                        (recur (inc (last eip-stack)) registers (butlast eip-stack)))
