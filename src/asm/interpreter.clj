@@ -1,6 +1,5 @@
 (ns asm.interpreter
-  (:require [asm.parser :refer [build-symbol-table]]
-            [asm.macros :refer :all]))
+  (:require [asm.parser :refer [build-symbol-table]]))
 
 (defn get-value [registers op]
   (if (keyword? op)
@@ -37,17 +36,17 @@
                 (= :mov instruction)
                 (recur (inc eip) (apply (partial mov registers) opcodes) eip-stack)
                 (= :inc instruction)
-                (apply-unary-function registers eip eip-stack inc opcodes)
+                (recur (inc eip) (apply (partial unary-op registers inc) opcodes) eip-stack)
                 (= :dec instruction)
-                (apply-unary-function registers eip eip-stack dec opcodes)
+                (recur (inc eip) (apply (partial unary-op registers dec) opcodes) eip-stack)
                 (= :mul instruction)
-                (apply-binary-function registers eip eip-stack * opcodes)
+                (recur (inc eip) (apply (partial binary-op registers *) opcodes) eip-stack)
                 (= :add instruction)
-                (apply-binary-function registers eip eip-stack + opcodes)
+                (recur (inc eip) (apply (partial binary-op registers +) opcodes) eip-stack)
                 (= :sub instruction)
-                (apply-binary-function registers eip eip-stack - opcodes)
+                (recur (inc eip) (apply (partial binary-op registers -) opcodes) eip-stack)
                 (= :div instruction)
-                (apply-binary-function registers eip eip-stack quot opcodes)
+                (recur (inc eip) (apply (partial binary-op registers quot) opcodes) eip-stack)
                 (= :jmp instruction)
                 (recur (apply (partial jmp symbol-table) opcodes) registers eip-stack)
                 (= :jnz instruction)
