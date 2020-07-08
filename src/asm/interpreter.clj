@@ -53,6 +53,13 @@
         (= :and instruction) bit-and))
 
 ;;=======================================================================================================
+;; Return the appropriate unary operation for the given unary instruction.
+;;=======================================================================================================
+(defn get-unary-operation [instruction]
+  (cond (= :inc instruction) inc
+        (= :dec instruction) dec))
+
+;;=======================================================================================================
 ;; jump forward or backwards y steps if x is not zero.
 ;; x and y can both be registers so we get their value via (get-value).
 ;;=======================================================================================================
@@ -89,6 +96,12 @@
 ;;=======================================================================================================
 (defn is-binary-operation? [instruction]
   (not (nil? (#{:mul :add :sub :div :xor :and :or} instruction))))
+
+;;=======================================================================================================
+;; Returns true if the specified instruction is a unary instruction, otherwise false.
+;;=======================================================================================================
+(defn is-unary-operation? [instruction]
+  (not (nil? (#{:inc :dec} instruction))))
 
 ;;=======================================================================================================
 ;; After a cmp either the comparison will be in one of three states, :eq, :gt, :lt
@@ -132,10 +145,8 @@
                 registers
                 (= :mov instruction)
                 (recur (inc eip) (apply (partial mov registers) opcodes) eip-stack)
-                (= :inc instruction)
-                (recur (inc eip) (apply (partial unary-op registers inc) opcodes) eip-stack)
-                (= :dec instruction)
-                (recur (inc eip) (apply (partial unary-op registers dec) opcodes) eip-stack)
+                (is-unary-operation? instruction)
+                (recur (inc eip) (apply (partial unary-op registers (get-unary-operation instruction)) opcodes) eip-stack)
                 (is-binary-operation? instruction)
                 (recur (inc eip) (apply (partial binary-op registers (get-binary-operations instruction)) opcodes) eip-stack)
                 (= :cmp instruction)
