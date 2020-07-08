@@ -20,8 +20,8 @@
     1
     (get-value registers y)))
 
-(defn jmp [symbol-table opcode]
-  (inc (get symbol-table opcode)))
+(defn jmp [symbol-table label]
+  (inc (get symbol-table label)))
 
 (defn interpret [instructions]
   (let [symbol-table (build-symbol-table instructions)]
