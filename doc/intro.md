@@ -1,3 +1,17 @@
 # Introduction to asm
 
-TODO: write [great documentation](http://jacobian.org/writing/what-to-write/)
+A very simple assembly language parser and interpreter. 
+
+Supported instructions (so far):
+
+ * mov
+ * add
+ * sub
+ * dec
+ * inc
+ * mul
+ * div
+ * jnz
+ * labels:
+ * jmp label
+ * nop

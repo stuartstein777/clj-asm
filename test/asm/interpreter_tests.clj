@@ -7,7 +7,7 @@
   (is (= {:a 5 :b 5}  (mov {:b 5} :a :b))))
 
 (deftest interpret-tests
-  (is (= {:a 6, :b 5, :c 5} (interpret [[:mov :a 5]
+  (is (= {:a 6, :b 5, :c 5} (first (interpret [[:mov :a 5]
                                          [:inc :a]
                                          [:mov :b :a]
                                          [:dec :b]
@@ -17,9 +17,9 @@
                                          [:sub :a :b]
                                          [:div :a :c]
                                          [:end]
-                                         [:inc :a]])))
+                                         [:inc :a]]))))
   (testing "nops"
-    (is (= {:a 6, :b 5, :c 5} (interpret [[:mov :a 5]
+    (is (= {:a 6, :b 5, :c 5} (first (interpret [[:mov :a 5]
                                           [:inc :a]
                                           [:mov :b :a]
                                           [:dec :b]
@@ -32,17 +32,17 @@
                                           [:sub :a :b]
                                           [:div :a :c]
                                           [:end]
-                                          [:inc :a]]))))
-  (is (= {:a 1} (interpret [[:mov :a 0]
+                                          [:inc :a]])))))
+  (is (= {:a 1} (first (interpret [[:mov :a 0]
                             [:inc :a]
                             [:inc :a]
                             [:jmp :foo]
                             [:inc :a]
                             [:inc :a]
                             [:label :foo]
-                            [:dec :a]])))
+                            [:dec :a]]))))
 
-  (is (= {:a 0 :b 2 :c 1} (interpret '([:mov :a 0]
+  (is (= {:a 0 :b 2 :c 1} (first (interpret '([:mov :a 0]
                                        [:inc :a]
                                        [:inc :a]
                                        [:jmp :foo]
@@ -64,4 +64,4 @@
                                        [:inc :c]
                                        [:dec :a]
                                        [:jnz :a -1]
-                                       [:end])))))
+                                       [:end]))))))

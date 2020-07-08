@@ -14,17 +14,20 @@
 ;; DONE: label:     ::    define a label identifier for jumps.
 ;; DONE: jmp lbl    ::    jumps to the label lbl, moves the eip.
 ;; DONE: jnz x y    ::    jumps y instructions (positive or negative) if x is not zero.
-;; TODO: cmp x y   ::     compares x (either value or register) with y (either value or register). Result is used.
+;; DONE: cmp x y    ::    compares x (either value or register) with y (either value or register). Result is used.
 ;; TODO: jne lbl    ::    jump to the label lbl if the values of the previous cmp command were not equal.
 ;; TODO: je lbl     ::    jump to the label lbl if the values of the previous cmp command were equal.
 ;; TODO: jge lbl    ::    jump to the label lbl if x >= y in previous cmp command.
 ;; TODO: jg lbl     ::    jump to the label lbl if x > y in previous cmp command.
 ;; TODO: jle lbl    ::    jump to the label lbl if x <= y in previous cmp command.
 ;; TODO: jl lbl     ::    jump to the label lbl if x < y in previous cmp command.
+;; DONE: xor x y    ::    bit-xor x with y and store the result in x.
+;; TODO: or x y     ::    bit-or x with y and store the result in x.
+;; TODO: and x y    ::    bit-and x with y and store the result in x.
 ;; DONE nop         ::    do nothing.
-;; TODO: call lbl   ::    call the subroutine identified by lbl. When a ret is found in a subrouting, the eip should
+;; TODO: call lbl   ::    call the subroutine identified by lbl. When a ret is found in a subroutine, the eip should
 ;; TODO:                  return to the instruction next to this call command.
-;; TODO:  ret       ::    when a ret is found in a subroutine, the eip should return to the instruction that called the
+;; TODO: ret        ::    when a ret is found in a subroutine, the eip should return to the instruction that called the
 ;; TODO:                  function.
 ;; TODO: msg 'reg'  ::    this stores the output of the program. It may contain text strings (delimited by single
 ;; TODO:                  quotes) and registers, number of arguments isn't limited.
