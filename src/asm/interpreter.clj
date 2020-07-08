@@ -23,68 +23,69 @@
 (defn jmp [symbol-table label]
   (inc (get symbol-table label)))
 
-(defn cmp [registers internal-registers x y]
-  (println registers ":: " x ", " y)
+(defn cmp [registers x y]
   (let [x-val (if (keyword? x) (get registers x) x)
         y-val (if (keyword? y) (get registers y) y)]
-    (assoc internal-registers :cmp (cond-> []
-                                      (= x-val y-val) (conj :eq)
-                                      (> x-val y-val) (conj :gt)
-                                      (< x-val y-val) (conj :lt)))))
+    (assoc-in registers [:internal-registers :cmp] (cond (= x-val y-val) (conj :eq)
+                                                         (> x-val y-val) (conj :gt)
+                                                         (< x-val y-val) (conj :lt)))))
 
-; jump to the label lbl if cmp is not :eq
-(defn jne [registers internal-registers symbol-table lbl]
-  (if (:cmp ))
-
-    )
+(defn cmp-jmp [registers symbol-table eip comparer x lbl]
+  (if (comparer x (:cmp (:internal-registers registers)))
+    (lbl symbol-table)
+    (inc eip)))
 
 (defn interpret [instructions]
   (let [symbol-table (build-symbol-table instructions)]
-    (loop [eip          0
-           registers    {}
-           eip-stack    []
-           internal-registers {:cmp []}]
+    (loop [eip 0
+           registers {}
+           eip-stack []]
       (if (= eip (count instructions))
-        [registers internal-registers]
+        registers
         (let [[instruction & opcodes] (nth instructions eip)]
+          (println instruction " :: " registers)
           (cond (= :end instruction)
-                [registers internal-registers]
+                registers
                 (= :mov instruction)
-                (recur (inc eip) (apply (partial mov registers) opcodes) eip-stack internal-registers)
+                (recur (inc eip) (apply (partial mov registers) opcodes) eip-stack)
                 (= :inc instruction)
-                (recur (inc eip) (apply (partial unary-op registers inc) opcodes) eip-stack internal-registers)
+                (recur (inc eip) (apply (partial unary-op registers inc) opcodes) eip-stack)
                 (= :dec instruction)
-                (recur (inc eip) (apply (partial unary-op registers dec) opcodes) eip-stack internal-registers)
+                (recur (inc eip) (apply (partial unary-op registers dec) opcodes) eip-stack)
                 (= :mul instruction)
-                (recur (inc eip) (apply (partial binary-op registers *) opcodes) eip-stack internal-registers)
+                (recur (inc eip) (apply (partial binary-op registers *) opcodes) eip-stack)
                 (= :add instruction)
-                (recur (inc eip) (apply (partial binary-op registers +) opcodes) eip-stack internal-registers)
+                (recur (inc eip) (apply (partial binary-op registers +) opcodes) eip-stack)
                 (= :sub instruction)
-                (recur (inc eip) (apply (partial binary-op registers -) opcodes) eip-stack internal-registers)
+                (recur (inc eip) (apply (partial binary-op registers -) opcodes) eip-stack)
                 (= :div instruction)
-                (recur (inc eip) (apply (partial binary-op registers quot) opcodes) eip-stack internal-registers)
+                (recur (inc eip) (apply (partial binary-op registers quot) opcodes) eip-stack)
                 (= :xor instruction)
-                (recur (inc eip) (apply (partial binary-op registers bit-xor) opcodes) eip-stack internal-registers)
+                (recur (inc eip) (apply (partial binary-op registers bit-xor) opcodes) eip-stack)
                 (= :and instruction)
-                (recur (inc eip) (apply (partial binary-op registers bit-and) opcodes) eip-stack internal-registers)
+                (recur (inc eip) (apply (partial binary-op registers bit-and) opcodes) eip-stack)
                 (= :or instruction)
-                (recur (inc eip) (apply (partial binary-op registers bit-or) opcodes) eip-stack internal-registers)
+                (recur (inc eip) (apply (partial binary-op registers bit-or) opcodes) eip-stack)
                 (= :jmp instruction)
-                (recur (apply (partial jmp symbol-table) opcodes) registers eip-stack internal-registers)
+                (recur (apply (partial jmp symbol-table) opcodes) registers eip-stack)
                 (= :jnz instruction)
-                (recur (+ eip (apply (partial jnz registers) opcodes)) registers eip-stack internal-registers)
+                (recur (+ eip (apply (partial jnz registers) opcodes)) registers eip-stack)
                 (= :cmp instruction)
-                (recur (inc eip) registers eip-stack (apply (partial cmp registers internal-registers) opcodes))
+                (recur (inc eip)  (apply (partial cmp registers) opcodes) eip-stack)
                 (= :jne instruction)
-                (recur (apply (partial jne registers internal-registers symbol-table) opcodes) registers eip-sack internal-registers)
+                (recur (apply (partial cmp-jmp registers symbol-table eip not= :eq) opcodes) registers eip-stack)
+                (= :je instruction)
+                (recur (apply (partial cmp-jmp registers symbol-table eip = :eq) opcodes) registers eip-stack)
                 (or (= :nop instruction) (= :label instruction))
-                (recur (inc eip) registers eip-stack internal-registers)))))))
+                (recur (inc eip) registers eip-stack)))))))
 
-(interpret [[:mov :a 6]
+(interpret [[:mov :a 7]
             [:mov :b 7]
             [:cmp :a :b]
-            [:jne :foo]
+            [:je :foo]
             [:mul :a :b]
+            [:end]
+            [:cmp :a :b]
             [:label :foo]
             [:inc :a]])
 
