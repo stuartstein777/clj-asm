@@ -128,26 +128,40 @@
         (let [[instruction & args] (nth instructions eip)]
           (cond (= :end instruction)
                 registers
+
                 (= :mov instruction)
-                (recur (inc eip) (apply (partial mov registers) args) eip-stack)
+                (let [[x y] args]
+                  (recur (inc eip) (mov registers x y) eip-stack))
+
                 (in-set? #{:inc :dec} instruction)
-                (recur (inc eip) (apply (partial unary-op registers (get-unary-operation instruction)) args) eip-stack)
+                (recur (inc eip) (unary-op registers (get-unary-operation instruction) (first args)) eip-stack)
+
                 (in-set? #{:mul :add :sub :div :xor :and :or} instruction)
-                (recur (inc eip) (apply (partial binary-op registers (get-binary-operations instruction)) args) eip-stack)
+                (let [[x y] args]
+                  (recur (inc eip) (binary-op registers (get-binary-operations instruction) x y) eip-stack))
+
                 (= :cmp instruction)
-                (recur (inc eip)  (apply (partial cmp registers) args) eip-stack)
+                (let [[x y] args]
+                  (recur (inc eip) (cmp registers x y) eip-stack))
+
                 (= :jmp instruction)
-                (recur (apply (partial jmp symbol-table) args) registers eip-stack)
+                (recur (jmp symbol-table (first args)) registers eip-stack)
+
                 (= :jnz instruction)
-                (recur (+ eip (apply (partial jnz registers) args)) registers eip-stack)
+                (let [[x y] args]
+                  (recur (+ eip (jnz registers x y)) registers eip-stack))
+
                 (in-set? #{:jne :je :jge :jg :jle :jl} instruction)
-                (recur (apply (partial cmp-jmp registers symbol-table eip (cmp-jump-predicates instruction)) args)
-                        registers
-                        eip-stack)
+                (let [pred (cmp-jump-predicates instruction)
+                      x (first args)]
+                  (recur (cmp-jmp registers symbol-table eip pred x) registers eip-stack))
+
                 (= :call instruction)
-                (let [call-location (apply (partial call symbol-table) args)]
-                  (recur call-location registers (conj eip-stack eip)))
-                (= :ret instruction) (if (nil? eip-stack)
-                                       (assoc-in registers [:internal-registers :exit-code] -1)
-                                       (recur (inc (last eip-stack)) registers (butlast eip-stack)))
-                (or (= :nop instruction) (= :label instruction)) (recur (inc eip) registers eip-stack)))))))
+                  (recur (call symbol-table (first args)) registers (conj eip-stack eip))
+
+                (= :ret instruction)
+                (cond (nil? eip-stack) (assoc-in registers [:internal-registers :exit-code] -1)
+                      :else            (recur (inc (last eip-stack)) registers (butlast eip-stack)))
+
+                (or (= :nop instruction) (= :label instruction))
+                (recur (inc eip) registers eip-stack)))))))

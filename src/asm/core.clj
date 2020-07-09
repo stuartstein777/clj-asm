@@ -41,7 +41,16 @@
 ;; DONE: Parser to parse out labels and eip locations into map
 ;; How to deal with ret and msg 'reg' ???? Still to figure out...
 ;; initially not support numbers in register names.
-;; TODO:            ::    step by step instruction output, with registers (int and binary).
+;; TODO:            ::    step by step instruction output, with registers in nice table format.
+;;                  ::    something like:
+;;                  ::    ┏━━━━━━━━━━━━━━━━━━━┳━━━━━━━━━┳━━━━━━━━━━━━━━━━━━━━━━━━━┓
+;;                        ┃ Instruction       ┃Internal ┃ Registers               ┃
+;                         ┣━━━━━━━━━━━━━━━━━━━╋━━━━┯━━━━╋━━━┯━━━┳━━━━━━━━━━━━━━━━━┫
+;                         ┃ mov x 5           ┃cmp │    ┃ x │ 5 ┃▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒┃
+;                         ┠───────────────────╂────┼────╂───┼───╂───┬───┰─────────┨
+;                         ┃ mov y 6           ┃cmp │    ┃ x │ 5 ┃ y │ 6 ┃▒▒▒▒▒▒▒▒▒┃
+;                         ┠───────────────────╂────┼────╂───┼───╂───┴───┸─────────┨
+;                         ┗━━━━━━━━━━━━━━━━━━━┻━━━━┷━━━━┻━━━┷━━━┻━━━━━━━━━━━━━━━━━┛
 ;;
 
 (defn -main [& args]
