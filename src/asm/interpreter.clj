@@ -108,6 +108,28 @@
   (label symbol-table))
 
 ;;=======================================================================================================
+;; Builds a string for the program return value from the arguments to the set: instruction.
+;;=======================================================================================================
+(defn set-message [registers & args]
+    (assoc-in registers [:internal-registers :return-code] (reduce (fn [s a] (str s (get-value registers a))) args)))
+
+;;=======================================================================================================
+;; Gets the return value for the program. If its a number, it will parse it to an Integer.
+;; Otherwise just return it as a string.
+;; If return-registers? is set then return a vector of the return value and the registers.
+;;=======================================================================================================
+(defn get-return-value [registers return-registers?]
+  (let [res (:return-code (:internal-registers registers))
+        ret-value (cond (nil? res)
+                        0
+                        (not (nil? (re-matches #"^[\+\-]?\d*\.?[Ee]?[\+\-]?\d*$" res)))
+                        (Integer/parseInt res)
+                        :else res)]
+    (if return-registers?
+      [ret-value (dissoc registers :internal-registers)]
+      ret-value)))
+
+;;=======================================================================================================
 ;; The interpreter.
 ;;
 ;; Recursively handle each instruction in our set of instructions.
@@ -116,18 +138,20 @@
 ;; Exit when either we hit an :end or the eip is beyond the last instruction (when this occurs return -1.
 ;; as the exit code).
 ;;=======================================================================================================
-(defn interpret [instructions]
+(defn interpret [instructions return-registers?]
   (let [symbol-table (build-symbol-table instructions)]
     (loop [eip 0
            registers {}
            eip-stack []]
       (if (= eip (count instructions))
-        (assoc-in registers [:internal-registers :exit-code] -1)
+        (cond return-registers? [-1 registers]
+              :else -1)
+
         ; get the current instruction in the instructions list at the eip location and
         ; destructure into the instruction and its arguments.
         (let [[instruction & args] (nth instructions eip)]
           (cond (= :end instruction)
-                registers
+                (get-return-value registers return-registers?)
 
                 (= :mov instruction)
                 (let [[x y] args]
@@ -157,11 +181,14 @@
                   (recur (cmp-jmp registers symbol-table eip pred x) registers eip-stack))
 
                 (= :call instruction)
-                  (recur (call symbol-table (first args)) registers (conj eip-stack eip))
+                (recur (call symbol-table (first args)) registers (conj eip-stack eip))
+
+                (= :msg instruction)
+                (recur (inc eip) (apply (partial set-message registers) args) eip-stack)
 
                 (= :ret instruction)
                 (cond (empty? eip-stack) (assoc-in registers [:internal-registers :exit-code] -1)
-                      :else            (recur (inc (peek eip-stack)) registers (pop eip-stack)))
+                      :else              (recur (inc (peek eip-stack)) registers (pop eip-stack)))
 
                 (in-set? #{:nop :label} instruction)
                 (recur (inc eip) registers eip-stack)))))))

@@ -55,7 +55,7 @@
             [:end]
             [:label :foo]
             [:div :a 2]
-            [:ret]]
+            [:end]]
            (parse "; my first program
                    mov a 5
                    inc a     ; increment a
@@ -64,7 +64,7 @@
                    end
                    foo:
                    div a 2
-                   ret")))))
+                   end")))))
 
 (deftest parser-with-long-register-names
   (is (= [[:mov :abc 5]
@@ -93,4 +93,11 @@
 
 (deftest symbol-table-tests
   (is (= {:foo 5}
-         (build-symbol-table [[:mov :a 5] [:inc :a] [:call :foo] [:msg "(5+1)/2 =" :a] [:end] [:label :foo] [:div :a 2] [:ret]]))))
+         (build-symbol-table [[:mov :a 5]
+                              [:inc :a]
+                              [:call :foo]
+                              [:msg "(5+1)/2 =" :a]
+                              [:end]
+                              [:label :foo]
+                              [:div :a 2]
+                              [:ret]]))))

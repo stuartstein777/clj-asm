@@ -29,8 +29,8 @@
 ;;                        return to the instruction next to this call command.
 ;; DONE: ret        ::    when a ret is found in a subroutine, the eip should return to the instruction that called the
 ;;                        function.
-;; TODO: msg 'reg'  ::    this stores the output of the program. It may contain text strings (delimited by single
-;; TODO:                  quotes) and registers, number of arguments isn't limited.
+;; DONE: msg 'reg'  ::    this stores the output of the program. It may contain text strings (delimited by single
+;;                        quotes) and registers, number of arguments isn't limited.
 ;;                        Example: msg 'a: ', a, ' is not equal to ', b
 ;;                        Given, :a = 5 and :b = 6.
 ;;                        This would store "5 is not equal to 6"
