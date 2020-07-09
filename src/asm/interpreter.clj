@@ -161,7 +161,7 @@
 
                 (= :ret instruction)
                 (cond (nil? eip-stack) (assoc-in registers [:internal-registers :exit-code] -1)
-                      :else            (recur (inc (last eip-stack)) registers (butlast eip-stack)))
+                      :else            (recur (inc (peek eip-stack)) registers (pop eip-stack)))
 
-                (or (= :nop instruction) (= :label instruction))
+                (in-set? #{:nop :label} instruction)
                 (recur (inc eip) registers eip-stack)))))))
