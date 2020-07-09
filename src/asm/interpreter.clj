@@ -160,7 +160,7 @@
                   (recur (call symbol-table (first args)) registers (conj eip-stack eip))
 
                 (= :ret instruction)
-                (cond (nil? eip-stack) (assoc-in registers [:internal-registers :exit-code] -1)
+                (cond (empty? eip-stack) (assoc-in registers [:internal-registers :exit-code] -1)
                       :else            (recur (inc (peek eip-stack)) registers (pop eip-stack)))
 
                 (in-set? #{:nop :label} instruction)
