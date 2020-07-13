@@ -78,8 +78,8 @@
 ;; the result is stored in internal-registers :cmp register.
 ;;=======================================================================================================
 (defn cmp [registers x y]
-  (let [x-val (if (keyword? x) (get registers x) x)
-        y-val (if (keyword? y) (get registers y) y)]
+  (let [x-val (get-value registers x)
+        y-val (get-value registers y)]
     (assoc-in registers [:internal-registers :cmp] (cond (= x-val y-val) (conj :eq)
                                                          (> x-val y-val) (conj :gt)
                                                          (< x-val y-val) (conj :lt)))))
