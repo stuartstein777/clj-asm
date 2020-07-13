@@ -1,6 +1,5 @@
 (ns asm.interpreter
-  (:require [asm.parser :refer [build-symbol-table]]
-            [asm.helpers :refer :all]))
+  (:require [asm.parser :refer [build-symbol-table]]))
 
 ;;=======================================================================================================
 ;; if op is  register, returns the value from the registers.
@@ -34,11 +33,11 @@
 ;;=======================================================================================================
 (defn cmp-jump-predicates [jump-instruction]
   (cond (= :jge jump-instruction) #{:eq :gt}
-        (= :jg jump-instruction) #{:gt}
+        (= :jg  jump-instruction) #{:gt}
         (= :jne jump-instruction) #{:lt :gt}
-        (= :je jump-instruction) #{:eq}
+        (= :je  jump-instruction) #{:eq}
         (= :jle jump-instruction) #{:eq :lt}
-        (= :jl jump-instruction) #{:lt}))
+        (= :jl  jump-instruction) #{:lt}))
 
 ;;=======================================================================================================
 ;; Return the appropriate binary operation for the given binary instruction.
@@ -49,7 +48,7 @@
         (= :mul instruction) *
         (= :div instruction) quot
         (= :xor instruction) bit-xor
-        (= :or instruction) bit-or
+        (= :or  instruction) bit-or
         (= :and instruction) bit-and))
 
 ;;=======================================================================================================
@@ -157,10 +156,10 @@
                 (let [[x y] args]
                   (recur (inc eip) (mov registers x y) eip-stack))
 
-                (in-set? #{:inc :dec} instruction)
+                (#{:inc :dec} instruction)
                 (recur (inc eip) (unary-op registers (get-unary-operation instruction) (first args)) eip-stack)
 
-                (in-set? #{:mul :add :sub :div :xor :and :or} instruction)
+                (#{:mul :add :sub :div :xor :and :or} instruction)
                 (let [[x y] args]
                   (recur (inc eip) (binary-op registers (get-binary-operations instruction) x y) eip-stack))
 
@@ -175,7 +174,7 @@
                 (let [[x y] args]
                   (recur (+ eip (jnz registers x y)) registers eip-stack))
 
-                (in-set? #{:jne :je :jge :jg :jle :jl} instruction)
+                (#{:jne :je :jge :jg :jle :jl} instruction)
                 (let [pred (cmp-jump-predicates instruction)
                       x (first args)]
                   (recur (cmp-jmp registers symbol-table eip pred x) registers eip-stack))
@@ -190,5 +189,5 @@
                 (cond (empty? eip-stack) (assoc-in registers [:internal-registers :exit-code] -1)
                       :else              (recur (inc (peek eip-stack)) registers (pop eip-stack)))
 
-                (in-set? #{:nop :label} instruction)
+                (#{:nop :label} instruction)
                 (recur (inc eip) registers eip-stack)))))))
