@@ -94,10 +94,10 @@
 ;; If it is in the set then we can return the location for the label (lbl) in the symbol table.
 ;; Otherwise we just return the eip incremented so we advance to the next instruction.
 ;;=======================================================================================================
-(defn cmp-jmp [registers symbol-table eip valid-comps lbl]
-  (if (nil? (valid-comps (:cmp (:internal-registers registers))))
-    (inc eip)
-    (lbl symbol-table)))
+(defn cmp-jmp [registers symbol-table eip matching-comps lbl]
+  (if (matching-comps (:cmp (:internal-registers registers)))
+    (lbl symbol-table)
+    (inc eip)))
 
 ;;=======================================================================================================
 ;; Handle call instructions.
