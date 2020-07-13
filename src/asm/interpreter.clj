@@ -48,7 +48,7 @@
         (= :mul instruction) *
         (= :div instruction) quot
         (= :xor instruction) bit-xor
-        (= :or instruction)  bit-or
+        (= :or  instruction)  bit-or
         (= :and instruction) bit-and))
 
 ;;=======================================================================================================
