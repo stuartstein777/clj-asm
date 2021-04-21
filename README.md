@@ -31,6 +31,8 @@ Supported instructions (so far):
 <tr><td>ret</td><td>"ret"</td><td>returns execution to the top execution pointer on the execution pointer stack.</td></tr>
 <tr><td>end</td><td>"end"</td><td>terminates the program and returns the registers.</td></tr>
 <tr><td>msg</td><td>"msg 'x= ' x ', y= " y</td><td>Creates a message that is returned on program exit, unlimited arguments can be strings or registers or values.</td></tr>
+<tr><td>pop</td><td>"pop x"</td><td>Pops the top value off the stack into register x</td></tr>
+<tr><td>push</td><td>"push x"</td><td>Pushes x (value or register) onto the stack</td></tr>
 <tr><td>comments</td><td>";"</td><td>Comments are ignored, can be on own line or e.g. "mov a b  ; moves b into a" </td></tr>
 </table>
  
@@ -81,6 +83,8 @@ Supported instructions (so far):
 => ["a = 7, b = 0, c = 3" {:a 7, :b 0, :c 3}]
 ```
 
-# TODO
-
-* Nicer display when running, showing registers and instruction.
+## TODO ##
+Handle error codes:
+    MOV register that doesn't exist.
+    POP empty stack.
+    PUSH register that doesn't exist.
