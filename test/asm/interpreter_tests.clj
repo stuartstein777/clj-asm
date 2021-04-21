@@ -278,15 +278,27 @@
                        [:ret]], true))))
 
   (testing "nested function calls"
-    (= [0 {:a 1}] (interpret [[:call :foo]
-                              [:inc :a]
-                              [:end]
-                              [:label :foo]
-                              [:call :bar]
-                              [:ret]
-                              [:label :bar]
-                              [:mov :a 0]
-                              [:ret]], true))))
+    (is (= [0 {:a 1}] (interpret [[:call :foo]
+                                  [:inc :a]
+                                  [:end]
+                                  [:label :foo]
+                                  [:call :bar]
+                                  [:ret]
+                                  [:label :bar]
+                                  [:mov :a 0]
+                                  [:ret]], true))))
+  
+  (testing "push and pop"
+    (is (= [0 {:a 30 :b 20 :c 10 :d 20}] (interpret [[:push 10]
+                                                     [:push 20]
+                                                     [:push 30]
+                                                     [:pop :a]
+                                                     [:pop :b]
+                                                     [:pop :c]
+                                                     [:push :b]
+                                                     [:pop :d]
+                                                     [:end]] true))))
+  )
 
 (deftest setting-return-values
   (is (= ["x = 5, y = 6" {:x 5 :y 6}]

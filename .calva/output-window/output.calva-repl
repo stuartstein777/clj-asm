@@ -1104,3 +1104,6 @@ clj꞉asm.interpreter꞉> 
 "get value:: " {:a 30, :b 20, :c 10} 20
 [0 {:a 30, :b 20, :c 10, :d 20}]
 clj꞉asm.interpreter꞉> 
+; Syntax error compiling at (test/asm/interpreter_tests.clj:9:1).
+; Unable to resolve symbol: deftest in this context
+clj꞉asm.interpreter-tests꞉> 
