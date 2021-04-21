@@ -153,24 +153,24 @@
 ;;=======================================================================================================
 ;; Process regular instructions and return the new registers.
 ;;=======================================================================================================
-(defn process-instruction [instruction registers args]
+(defn process-instruction [instruction {:keys [registers] :as memory} args]
   (cond (= :mov instruction)
         (let [[x y] args]
-          (mov registers x y))
+          (assoc memory :registers (mov registers x y)))
 
         (#{:inc :dec} instruction)
-        (unary-op registers (get-unary-operation instruction) (first args))
+        (assoc memory :registers (unary-op registers (get-unary-operation instruction) (first args)))
 
         (#{:mul :add :sub :div :xor :and :or} instruction)
         (let [[x y] args]
-          (binary-op registers (get-binary-operations instruction) x y))
+          (assoc memory :registers (binary-op registers (get-binary-operations instruction) x y)))
 
         (= :cmp instruction)
         (let [[x y] args]
-          (cmp registers x y))
+          (assoc memory :registers (cmp registers x y)))
 
         (= :msg instruction)
-        (apply (partial set-message registers) args)))
+        (assoc memory :registers (apply (partial set-message registers) args))))
 
 ;;=======================================================================================================
 ;; The interpreter.
@@ -204,17 +204,15 @@
                                   (process-jump eip instruction (memory :registers) symbol-table (:eip-stack memory) args)
                                   (inc eip))
 
-                      registers (if (#{:mov :mul :add :sub :dec :xor :and :or :div :inc :msg :cmp} instruction)
-                                  (process-instruction instruction (memory :registers) args)
-                                  (memory :registers))
+                      memory (if (#{:mov :mul :add :sub :dec :xor :and :or :div :inc :msg :cmp :push :pop} instruction)
+                               (process-instruction instruction memory args)
+                               memory)
 
                       eip-stack (cond (= :ret instruction) (pop (:eip-stack memory))
                                       (= :call instruction) (conj (:eip-stack memory) eip)
                                       :else (:eip-stack memory))]
 
-                  (recur new-eip (-> memory
-                                     (assoc :registers registers)
-                                     (assoc :eip-stack eip-stack))))))))))
+                  (recur new-eip (assoc memory :eip-stack eip-stack)))))))))
 
 (comment  (interpret [[:mov :x 5]
                       [:mov :y 6]
@@ -230,7 +228,7 @@
                       [:label :foo]
                       [:end]], true))
 
-(comment "jne jumps " (interpret [[:mov :a 5]
+(comment "jne jumps " (interpret [[:mov :a 6]
                                   [:mov :b 6]
                                   [:cmp :a :b]
                                   [:jne :foo]

@@ -648,3 +648,36 @@ clj꞉asm.interpreter꞉> 
 "Memory" {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
 [0 {:a 5, :b 6}]
 clj꞉asm.interpreter꞉> 
+"Memory" {:registers {}, :eip-stack [], :stack []}
+"Memory" {:registers {:x 5}, :eip-stack [], :stack []}
+"Memory" {:registers {:x 5, :y 6}, :eip-stack [], :stack []}
+"Memory" {:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}, :eip-stack [], :stack []}
+["x = 5, y = 6" {:x 5, :y 6}]
+clj꞉asm.interpreter꞉> 
+"Memory" {:registers {}, :eip-stack [], :stack []}
+"Memory" {:registers {:x 5}, :eip-stack [], :stack []}
+"Memory" {:registers {:x 5, :y 6}, :eip-stack [], :stack []}
+"Memory" {:registers {:x 5, :y 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+"JMP" {:x 5, :y 6, :internal-registers {:cmp :lt}}
+"Memory" {:registers {:x 5, :y 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+"Memory" {:registers {:x 5, :y 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+[0 {:x 5, :y 6}]
+clj꞉asm.interpreter꞉> 
+"Memory" {:registers {}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5, :b 6}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+"JMP" {:a 5, :b 6, :internal-registers {:cmp :lt}}
+"Memory" {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+[0 {:a 5, :b 6}]
+clj꞉asm.interpreter꞉> 
+"Memory" {:registers {}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 6}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 6, :b 6}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 6, :b 6, :internal-registers {:cmp :eq}}, :eip-stack [], :stack []}
+"JMP" {:a 6, :b 6, :internal-registers {:cmp :eq}}
+"Memory" {:registers {:a 6, :b 6, :internal-registers {:cmp :eq}}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 36, :b 6, :internal-registers {:cmp :eq}}, :eip-stack [], :stack []}
+[0 {:a 36, :b 6}]
+clj꞉asm.interpreter꞉> 
