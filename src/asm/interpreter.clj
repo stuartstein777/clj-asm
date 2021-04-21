@@ -124,6 +124,7 @@
 ;; Process the jump instructions and return the new eip.
 ;;=======================================================================================================
 (defn process-jump [eip instruction registers symbol-table eip-stack args]
+  #_(prn "JMP" registers)
   ;; if we are jumping to a label, just return the location of the label in the symbol-table
   (cond (= :jmp instruction)
         (inc (get symbol-table (first args)))
@@ -184,34 +185,56 @@
 ;;=======================================================================================================
 (defn interpret [instructions return-registers?]
   (let [symbol-table (build-symbol-table instructions)]
-    (loop [eip 0 registers {} eip-stack []]
+    (loop [eip 0
+           memory {:registers {} :eip-stack [] :stack []}]
+      #_(prn eip "::" memory)
       ; if we have an eip that points after the last instruction exit with a -1 error code and
       ; show the registers (including internal registers).
       (if (or (= eip (count instructions)) (= eip -1))
         (if return-registers?
-          [-1 registers]
+          [-1 (memory :registers)]
           -1)
         ; else get the current instruction in the instructions list at the eip location and
         ; destructure into the instruction and its arguments.
         (let [[instruction & args] (nth instructions eip)]
           (cond (= :end instruction)
-                (return-value registers return-registers?)
+                (return-value (memory :registers) return-registers?)
                 :else
                 (let [new-eip   (if (#{:jmp :jnz :jne :je :jgl :jg :jle :jl :jge :ret :call} instruction)
-                                  (process-jump eip instruction registers symbol-table eip-stack args)
+                                  (process-jump eip instruction (memory :registers) symbol-table (:eip-stack memory) args)
                                   (inc eip))
 
                       registers (if (#{:mov :mul :add :sub :dec :xor :and :or :div :inc :msg :cmp} instruction)
-                                  (process-instruction instruction registers args)
-                                  registers)
+                                  (process-instruction instruction (memory :registers) args)
+                                  (memory :registers))
 
-                      eip-stack (cond (= :ret instruction) (pop eip-stack)
-                                      (= :call instruction) (conj eip-stack eip)
-                                      :else eip-stack)]
+                      eip-stack (cond (= :ret instruction) (pop (:eip-stack memory))
+                                      (= :call instruction) (conj (:eip-stack memory) eip)
+                                      :else (:eip-stack memory))]
 
-                  (recur new-eip registers eip-stack))))))))
+                  (recur new-eip (-> memory
+                                     (assoc :registers registers)
+                                     (assoc :eip-stack eip-stack))))))))))
 
 (comment  (interpret [[:mov :x 5]
                       [:mov :y 6]
                       [:msg "x = " :x ", y = " :y]
                       [:end]], true))
+
+(comment  (interpret [[:mov :x 5]
+                      [:mov :y 6]
+                      [:cmp :x :y]
+                      [:jne :foo]
+                      [:mul :x :y]
+                      [:end]
+                      [:label :foo]
+                      [:end]], true))
+
+(comment "jne jumps " (interpret [[:mov :a 5]
+                                  [:mov :b 6]
+                                  [:cmp :a :b]
+                                  [:jne :foo]
+                                  [:mul :a :b]
+                                  [:end]
+                                  [:label :foo]
+                                  [:end]], true))

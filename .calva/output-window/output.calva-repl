@@ -1,0 +1,650 @@
+; This is the Calva evaluation results output window.
+; TIPS: The keyboard shortcut `ctrl+alt+c o` shows and focuses this window
+;   when connected to a REPL session.
+; Please see https://calva.io/output/ for more info.
+; Happy coding! ♥️
+
+; Jacking in...
+; Starting Jack-in Terminal: lein update-in :dependencies conj '[nrepl,"0.8.3"]' -- update-in :plugins conj '[cider/cider-nrepl,"0.25.11"]' -- update-in '[:repl-options,:nrepl-middleware]' conj '["cider.nrepl/cider-middleware"]' -- repl :headless
+; Hooking up nREPL sessions...
+; Connected session: clj
+; TIPS: 
+;   - You can edit the contents here. Use it as a REPL if you like.
+;   - `alt+enter` evaluates the current top level form.
+;   - `ctrl+enter` evaluates the current form.
+;   - `alt+up` and `alt+down` traverse up and down the REPL command history
+;      when the cursor is after the last contents at the prompt
+;   - Clojure lines in stack traces are peekable and clickable.
+clj꞉asm.core꞉>  ; Use `alt+enter` to evaluate
+; Jack-in done.
+clj꞉asm.core꞉> 
+; Execution error at asm.interpreter/eval5486$loading (form-init1520668051388414836.clj:1).
+; No namespace: asm.parser
+clj꞉asm.interpreter꞉> 
+; Execution error at asm.interpreter/eval5492$loading (form-init1520668051388414836.clj:1).
+; No namespace: asm.parser
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/get-value
+clj꞉asm.interpreter꞉> 
+5
+clj꞉asm.interpreter꞉> 
+; Syntax error compiling at (src/asm/core.clj:57:10).
+; Unable to resolve symbol: parse in this context
+clj꞉asm.core꞉> 
+; Execution error at asm.interpreter/eval7485$loading (form-init1520668051388414836.clj:1).
+; No namespace: asm.parser
+clj꞉asm.interpreter꞉> 
+; Execution error at asm.core/eval7493$loading (form-init1520668051388414836.clj:1).
+; No namespace: asm.parser
+clj꞉asm.core꞉> 
+; Syntax error compiling at (src/asm/core.clj:57:10).
+; Unable to resolve symbol: parse in this context
+clj꞉asm.core꞉> 
+; Syntax error compiling at (src/asm/core.clj:57:10).
+; Unable to resolve symbol: parse in this context
+clj꞉asm.core꞉> 
+; Syntax error compiling at (src/asm/core.clj:58:10).
+; Unable to resolve symbol: interpret in this context
+clj꞉asm.core꞉> 
+; Execution error at asm.core/eval7499$loading (form-init1520668051388414836.clj:1).
+; No namespace: asm.parser
+clj꞉asm.core꞉> 
+; Execution error at asm.core/eval7505$loading (form-init1520668051388414836.clj:1).
+; No namespace: asm.parser
+clj꞉asm.core꞉> 
+nil
+clj꞉asm.parser꞉> 
+; Execution error (IllegalAccessError) at asm.core/eval7535$loading (form-init1520668051388414836.clj:1).
+; parse does not exist
+clj꞉asm.core꞉> 
+; Syntax error compiling at (src/asm/core.clj:58:10).
+; Unable to resolve symbol: interpret in this context
+clj꞉asm.core꞉> 
+; Syntax error compiling at (src/asm/core.clj:58:10).
+; Unable to resolve symbol: interpret in this context
+clj꞉asm.core꞉> 
+; Syntax error compiling at (src/asm/core.clj:60:1).
+; Unable to resolve symbol: parse in this context
+clj꞉asm.core꞉> 
+; Execution error (IllegalAccessError) at asm.core/eval7552$loading (form-init1520668051388414836.clj:1).
+; parse does not exist
+clj꞉asm.core꞉> 
+; Syntax error compiling at (src/asm/core.clj:47:10).
+; Unable to resolve symbol: interpret in this context
+clj꞉asm.core꞉> 
+; Execution error (IllegalAccessError) at asm.core/eval7558$loading (form-init1520668051388414836.clj:1).
+; parse does not exist
+clj꞉asm.core꞉> 
+nil
+clj꞉asm.parser꞉> 
+; Execution error (IllegalAccessError) at asm.interpreter/eval7578$loading (form-init1520668051388414836.clj:1).
+; build-symbol-table does not exist
+clj꞉asm.interpreter꞉> 
+; Execution error (IllegalAccessError) at asm.core/eval7586$loading (form-init1520668051388414836.clj:1).
+; parse does not exist
+clj꞉asm.core꞉> 
+; Syntax error compiling at (src/asm/parser.clj:78:8).
+; Unable to resolve symbol: to-keywords in this context
+clj꞉asm.parser꞉> 
+; Evaluating file: parser.clj
+; Syntax error (UnsupportedOperationException) compiling recur at (src/asm/parser.clj:34:23).
+; Can only recur from tail position
+; Evaluation of file parser.clj failed: class clojure.lang.Compiler$CompilerException
+
+clj꞉asm.parser꞉> 
+clj꞉asm.parser꞉> 
+; Evaluating file: core.clj
+; Syntax error (IllegalAccessError) compiling at (asm/interpreter.clj:1:1).
+; build-symbol-table does not exist
+; Evaluation of file core.clj failed: class clojure.lang.Compiler$CompilerException
+
+clj꞉asm.parser꞉> 
+clj꞉asm.core꞉> 
+; Execution error (IllegalStateException) at asm.core/eval7633 (form-init1520668051388414836.clj:49).
+; Attempting to call unbound fn: #'asm.parser/parse
+clj꞉asm.core꞉> 
+; Execution error (IllegalStateException) at asm.core/eval7635 (form-init1520668051388414836.clj:49).
+; Attempting to call unbound fn: #'asm.parser/parse
+clj꞉asm.core꞉> 
+; Execution error (IllegalStateException) at asm.parser/eval7639 (form-init1520668051388414836.clj:80).
+; Attempting to call unbound fn: #'asm.parser/parse
+clj꞉asm.parser꞉> 
+; Syntax error compiling at (src/asm/parser.clj:78:8).
+; Unable to resolve symbol: to-keywords in this context
+clj꞉asm.parser꞉> 
+; Evaluating file: parser.clj
+; Syntax error (UnsupportedOperationException) compiling recur at (src/asm/parser.clj:34:23).
+; Can only recur from tail position
+; Evaluation of file parser.clj failed: class clojure.lang.Compiler$CompilerException
+
+clj꞉asm.parser꞉> 
+clj꞉asm.parser꞉> 
+; Execution error (IllegalStateException) at asm.parser/eval7665 (form-init1520668051388414836.clj:80).
+; Attempting to call unbound fn: #'asm.parser/parse
+clj꞉asm.parser꞉> 
+; Syntax error compiling at (src/asm/parser.clj:78:8).
+; Unable to resolve symbol: to-keywords in this context
+clj꞉asm.parser꞉> 
+#'asm.parser/is-register?
+clj꞉asm.parser꞉> 
+#'asm.parser/get-value
+clj꞉asm.parser꞉> 
+; Syntax error (UnsupportedOperationException) compiling recur at (src/asm/parser.clj:34:23).
+; Can only recur from tail position
+clj꞉asm.parser꞉> 
+; Syntax error (UnsupportedOperationException) compiling recur at (src/asm/parser.clj:34:23).
+; Can only recur from tail position
+clj꞉asm.parser꞉> 
+; Syntax error (UnsupportedOperationException) compiling recur at (src/asm/parser.clj:34:23).
+; Can only recur from tail position
+clj꞉asm.parser꞉> 
+; Syntax error (UnsupportedOperationException) compiling recur at (src/asm/parser.clj:34:23).
+; Can only recur from tail position
+clj꞉asm.parser꞉> 
+#'asm.parser/parse-msg
+clj꞉asm.parser꞉> 
+#'asm.parser/drop-last-char
+clj꞉asm.parser꞉> 
+#'asm.parser/to-keywords
+clj꞉asm.parser꞉> 
+#'asm.parser/scrub-comments
+clj꞉asm.parser꞉> 
+#'asm.parser/build-symbol-table
+clj꞉asm.parser꞉> 
+#'asm.parser/parse
+clj꞉asm.parser꞉> 
+([:mov :a 5])
+clj꞉asm.parser꞉> 
+; Syntax error compiling at (src/asm/core.clj:47:10).
+; Unable to resolve symbol: interpret in this context
+clj꞉asm.core꞉> 
+; Evaluating file: core.clj
+#'asm.core/-main
+clj꞉asm.core꞉> 
+([:mov :a 5])
+clj꞉asm.core꞉> 
+#'asm.parser/parse-msg
+clj꞉asm.parser꞉> 
+#'asm.core/-main
+clj꞉asm.core꞉> 
+([:mov :a 0] [:mov :b 1] [:mov :c 2] [:mul :c :b] [:push :c] [:push :b] [:push 5] [:pop :a] [:mul :c 10])
+clj꞉asm.parser꞉> 
+([:mov :a 0] [:mov :b 1] [:mov :c 2] [:mul :c :b] [:push :c] [:push :b] [:push 5] [:pop :a] [:mul :c 10])
+clj꞉asm.parser꞉> 
+([:mov :a 5] [:mov :b 6] [:mov :c 7] [:push 4] [:push :a] [:pop :b])
+clj꞉asm.core꞉> 
+([:mov :a 5] [:mov :b 6] [:mov :c 7] [:push 4] [:push :a] [:pop :b])
+clj꞉asm.core꞉> 
+([:mov :a 5] [:mov :b 6] [:mov :c 7] [:push 4] [:push :a] [:pop :b])
+clj꞉asm.core꞉> 
+; Execution error (ArityException) at asm.core/eval7823 (form-init1520668051388414836.clj:58).
+; Wrong number of args (5) passed to: clojure.lang.PersistentVector
+clj꞉asm.core꞉> 
+; Execution error (ArityException) at asm.core/eval7825 (form-init1520668051388414836.clj:58).
+; Wrong number of args (1) passed to: asm.interpreter/interpret
+clj꞉asm.core꞉> 
+-1
+clj꞉asm.core꞉> 
+[-1 {:a 5, :b 6, :c 7}]
+clj꞉asm.core꞉> 
+nil
+clj꞉asm.interpreter꞉> 
+{:registers {}, :internal-registers {}}
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+; Evaluating file: interpreter.clj
+{:registers {}, :internal-registers {}}
+clj꞉asm.interpreter꞉> 
+["x = , y = " {:registers {:registers {:x 5}, :y 6}}]
+clj꞉asm.interpreter꞉> 
+{:registers {}, :internal-registers {}}
+clj꞉asm.interpreter꞉> 
+; Syntax error compiling at (src/asm/interpreter.clj:205:68).
+; Unable to resolve symbol: registers in this context
+clj꞉asm.interpreter꞉> 
+["x = , y = " {:registers {:registers {:x 5}, :y 6}}]
+clj꞉asm.interpreter꞉> 
+; Syntax error compiling at (src/asm/interpreter.clj:205:68).
+; Unable to resolve symbol: registers in this context
+clj꞉asm.interpreter꞉> 
+["x = , y = " {:registers {:registers {:x 5}, :y 6}}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+["x = 5, y = 6" {:x 5, :y 6}]
+clj꞉asm.interpreter꞉> 
+["x = 5, y = 6" {:x 5, :y 6}]
+clj꞉asm.interpreter꞉> 
+; Evaluating file: interpreter.clj
+nil
+clj꞉asm.interpreter꞉> 
+[0 {:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}]
+clj꞉asm.interpreter꞉> 
+; Syntax error reading source at (REPL:83:21).
+; Map literal must contain an even number of forms
+clj꞉asm.interpreter-tests꞉> 
+[0 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}]
+clj꞉asm.interpreter꞉> 
+; Execution error (ArityException) at asm.interpreter/eval7987 (form-init1520668051388414836.clj:225).
+; Wrong number of args (1) passed to: asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+[-1 {:registers {:a 5}}]
+clj꞉asm.interpreter꞉> 
+[0 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}]
+clj꞉asm.interpreter꞉> 
+; Evaluating file: interpreter.clj
+[0 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+0 []
+1 []
+2 []
+3 []
+4 []
+5 []
+[0 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}]
+clj꞉asm.interpreter꞉> 
+0 []
+1 []
+2 []
+3 []
+4 []
+5 []
+[0 {:registers {:a 36, :b 6, :internal-registers {:cmp :eq}}}]
+clj꞉asm.interpreter꞉> 
+0 []
+1 []
+2 []
+3 []
+4 []
+5 []
+[0 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-jump
+clj꞉asm.interpreter꞉> 
+0 []
+1 []
+2 []
+3 []
+"Processing Jump " {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+4 []
+5 []
+[0 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+{:registers {}, :internal-registers {}, :stack []}
+{:registers {:registers {:a 5}}, :internal-registers {}, :stack []}
+{:registers {:registers {:a 5, :b 6}}, :internal-registers {}, :stack []}
+{:registers {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}, :internal-registers {}, :stack []}
+"Processing Jump " {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}, :internal-registers {}, :stack []}
+{:registers {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}, :internal-registers {}, :stack []}
+[0 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}]
+clj꞉asm.interpreter꞉> 
+{:registers {}, :internal-registers {}, :stack []}
+{:registers {:registers {:x 5}}, :internal-registers {}, :stack []}
+{:registers {:registers {:x 5, :y 6}}, :internal-registers {}, :stack []}
+{:registers {:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}, :internal-registers {}, :stack []}
+[0 {:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}]
+clj꞉asm.interpreter꞉> 
+{:foo 6}
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+{:registers {}, :internal-registers {}, :stack []}
+{:registers {:registers {:a 5}}, :internal-registers {}, :stack []}
+{:registers {:registers {:a 5, :b 6}}, :internal-registers {}, :stack []}
+{:registers {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}, :internal-registers {}, :stack []}
+"Processing Jump " {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}, :internal-registers {}, :stack []}
+{:registers {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}, :internal-registers {}, :stack []}
+[0 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+{}
+{:registers {:x 5}}
+{:registers {:x 5, :y 6}}
+{:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}
+[0 {:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}]
+clj꞉asm.interpreter꞉> 
+{}
+{:registers {:a 5}}
+{:registers {:a 5, :b 6}}
+{:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"Processing Jump " {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}
+[0 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-jump
+clj꞉asm.interpreter꞉> 
+{}
+{:registers {:a 5}}
+{:registers {:a 5, :b 6}}
+{:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"Processing Jump " {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}
+[0 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}]
+clj꞉asm.interpreter꞉> 
+{}
+{:registers {:x 5}}
+{:registers {:x 5, :y 6}}
+{:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}
+[0 {:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/return-value
+clj꞉asm.interpreter꞉> 
+{}
+{:registers {:x 5}}
+{:registers {:x 5, :y 6}}
+{:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}
+[0 {:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}]
+clj꞉asm.interpreter꞉> 
+{}
+{:registers {:x 5}}
+{:registers {:x 5, :y 6}}
+{:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}
+[0 {:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}]
+clj꞉asm.interpreter꞉> 
+; Execution error (ArityException) at asm.interpreter/eval8118 (form-init1520668051388414836.clj:123).
+; Wrong number of args (1) passed to: asm.interpreter/return-value
+clj꞉asm.interpreter꞉> 
+[0 {:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}]
+clj꞉asm.interpreter꞉> 
+0
+clj꞉asm.interpreter꞉> 
+nil
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/return-value
+clj꞉asm.interpreter꞉> 
+"x = 5, y = 6"
+clj꞉asm.interpreter꞉> 
+nil
+clj꞉asm.interpreter꞉> 
+{}
+{:registers {:x 5}}
+{:registers {:x 5, :y 6}}
+{:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}
+["x = 5, y = 6" {:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}]
+clj꞉asm.interpreter꞉> 
+{}
+{:registers {:x 5}}
+{:registers {:x 5, :y 6}}
+{:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}
+"x = 5, y = 6"
+clj꞉asm.interpreter꞉> 
+{}
+{:registers {:x 5}}
+{:registers {:x 5, :y 6}}
+{:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}
+["x = 5, y = 6" {:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}]
+clj꞉asm.interpreter꞉> 
+{}
+{:registers {:a 5}}
+{:registers {:a 5, :b 6}}
+{:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"Processing Jump " {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}
+[0 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}]
+clj꞉asm.interpreter꞉> 
+{}
+{:registers {:a 5}}
+{:registers {:a 5, :b 6}}
+{:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"Processing Jump " {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}
+[0 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}]
+clj꞉asm.interpreter꞉> 
+{}
+{:registers {:a 5}}
+{:registers {:a 5, :b 6}}
+{:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"Processing Jump " {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}
+0
+clj꞉asm.interpreter꞉> 
+{}
+{:registers {:a 5}}
+{:registers {:a 5, :b 6}}
+{:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"Processing Jump " {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}
+[0 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}]
+clj꞉asm.interpreter꞉> 
+{}
+{:registers {:a 5}}
+{:registers {:a 5, :b 6}}
+{:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"Processing Jump " {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}
+[0 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+{} "EIP:" 0
+{:registers {:a 5}} "EIP:" 1
+{:registers {:a 5, :b 6}} "EIP:" 2
+{:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}} "EIP:" 3
+"Processing Jump " {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+{:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}} "EIP:" 4
+{:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}} "EIP:" 5
+[0 {:registers {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}, :stack []}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+"EIP:" 0 {}
+"EIP:" 1 {:registers {:a 5}}
+"EIP:" 2 {:registers {:a 5, :b 6}}
+"EIP:" 3 {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"Processing Jump " {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"EIP:" 4 {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"EIP:" 5 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}
+[0 {:registers {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}, :stack []}]
+clj꞉asm.interpreter꞉> 
+"Processing Jump " {:registers {:a 5, :b 6}}
+; Execution error (IllegalArgumentException) at asm.interpreter/process-jump (form-init1520668051388414836.clj:139).
+; Don't know how to create ISeq from: clojure.lang.Keyword
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-jump
+clj꞉asm.interpreter꞉> 
+"Processing Jump " {:registers {:a 5, :b 6}}
+; Execution error (IllegalArgumentException) at asm.interpreter/process-jump (form-init1520668051388414836.clj:141).
+; Don't know how to create ISeq from: clojure.lang.Keyword
+clj꞉asm.interpreter꞉> 
+"Processing Jump " {:registers {:a 5, :b 6}}
+4
+clj꞉asm.interpreter꞉> 
+"EIP:" 0 {}
+"EIP:" 1 {:registers {:a 5}}
+"EIP:" 2 {:registers {:a 5, :b 6}}
+"EIP:" 3 {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"Processing Jump " {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"EIP:" 4 {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"EIP:" 5 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}
+[0 {:registers {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}, :stack []}]
+clj꞉asm.interpreter꞉> 
+{:a 5, :b 6, :internal-registers {:cmp :lt}}
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+"EIP:" 0 {}
+"EIP:" 1 {:registers {:a 5}}
+"EIP:" 2 {:registers {:a 5, :b 6}}
+"EIP:" 3 {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"Processing Jump " {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"EIP:" 4 {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"EIP:" 5 {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}
+[0 {:registers {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}, :stack []}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+"EIP:" 0 {:registers {}, :internal-registers {}, :stack []}
+"EIP:" 1 {:registers {:registers {:a 5}}, :internal-registers {}, :stack []}
+"EIP:" 2 {:registers {:registers {:a 5, :b 6}}, :internal-registers {}, :stack []}
+"EIP:" 3 {:registers {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}, :internal-registers {}, :stack []}
+"Processing Jump " {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}
+"EIP:" 4 {:registers {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}}, :internal-registers {}, :stack []}
+"EIP:" 5 {:registers {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}, :internal-registers {}, :stack []}
+[0 {:registers {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}}, :stack []}]
+clj꞉asm.interpreter꞉> 
+"EIP:" 0 {:registers {}, :internal-registers {}, :stack []}
+"EIP:" 1 {:registers {:registers {:x 5}}, :internal-registers {}, :stack []}
+"EIP:" 2 {:registers {:registers {:x 5, :y 6}}, :internal-registers {}, :stack []}
+"EIP:" 3 {:registers {:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}, :internal-registers {}, :stack []}
+[0 {:registers {:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}}, :stack []}]
+clj꞉asm.interpreter꞉> 
+; Execution error (ArityException) at asm.interpreter/eval8203 (form-init1520668051388414836.clj:243).
+; Wrong number of args (1) passed to: asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+"EIP:" 0 {:registers {}, :internal-registers {}, :stack []}
+"EIP:" 1 {:registers {:registers {:a 5}}, :internal-registers {}, :stack []}
+[-1 {:registers {:a 5}}]
+clj꞉asm.interpreter꞉> 
+"EIP:" 0 {:registers {}, :internal-registers {}, :stack []}
+"EIP:" 1 {:registers {:registers {:a 5}}, :internal-registers {}, :stack []}
+[-1 {:registers {:a 5}}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+"EIP:" 0 {:registers {}, :internal-registers {}, :stack []}
+{:registers {:a 5}}
+"EIP:" 1 {:registers {:registers {:a 5}}, :internal-registers {}, :stack []}
+[-1 {:registers {:a 5}}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+"EIP:" 0 {:registers {}, :internal-registers {}, :stack []}
+"REGISTERS::" {:registers {:a 5}}
+"EIP:" 1 {:registers {:registers {:a 5}}, :internal-registers {}, :stack []}
+[-1 {:registers {:a 5}}]
+clj꞉asm.interpreter꞉> 
+"EIP:" 0 {:registers {}, :internal-registers {}, :stack []}
+"REGISTERS::" {:registers {:a 5}}
+"EIP:" 1 {:registers {:registers {:a 5}}, :internal-registers {}, :stack []}
+[-1 {:registers {:a 5}}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+"EIP:" 0 {:registers {}, :internal-registers {}, :stack []}
+"REGISTERS::" {:a 5}
+"EIP:" 1 {:registers {:a 5}, :internal-registers {}, :stack []}
+[-1 {:a 5}]
+clj꞉asm.interpreter꞉> 
+"EIP:" 0 {:registers {}, :internal-registers {}, :stack []}
+"REGISTERS::" {:a 5}
+"EIP:" 1 {:registers {:a 5}, :internal-registers {}, :stack []}
+"REGISTERS::" {:b 6}
+"EIP:" 2 {:registers {:b 6}, :internal-registers {}, :stack []}
+"REGISTERS::" {:internal-registers {:cmp :eq}}
+"EIP:" 3 {:registers {:internal-registers {:cmp :eq}}, :internal-registers {}, :stack []}
+"Processing Jump " {:internal-registers {:cmp :eq}}
+"REGISTERS::" {:internal-registers {:cmp :eq}}
+"EIP:" 4 {:registers {:internal-registers {:cmp :eq}}, :internal-registers {}, :stack []}
+; Execution error (NullPointerException) at asm.interpreter/binary-op (interpreter.clj:29).
+; null
+clj꞉asm.interpreter꞉> 
+"EIP:" 0 {:registers {}, :internal-registers {}, :stack []}
+"REGISTERS::" {:x 5}
+"EIP:" 1 {:registers {:x 5}, :internal-registers {}, :stack []}
+"REGISTERS::" {:y 6}
+"EIP:" 2 {:registers {:y 6}, :internal-registers {}, :stack []}
+"REGISTERS::" {:internal-registers {:return-code "x = , y = "}}
+"EIP:" 3 {:registers {:internal-registers {:return-code "x = , y = "}}, :internal-registers {}, :stack []}
+["x = , y = " {:registers {:internal-registers {:return-code "x = , y = "}}, :stack []}]
+clj꞉asm.interpreter꞉> 
+; Evaluating file: interpreter.clj
+nil
+clj꞉asm.interpreter꞉> 
+["x = 5, y = 6" {:x 5, :y 6}]
+clj꞉asm.interpreter꞉> 
+[0 {:x 30, :y 6}]
+clj꞉asm.interpreter꞉> 
+[0 {:x 5, :y 6}]
+clj꞉asm.interpreter꞉> 
+[0 {:x 36, :y 6}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+["x = 5, y = 6" {:x 5, :y 6}]
+clj꞉asm.interpreter꞉> 
+; Execution error (ArityException) at asm.interpreter/interpret (form-init1520668051388414836.clj:202).
+; Wrong number of args (5) passed to: asm.interpreter/process-jump
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+["x = 5, y = 6" {:x 5, :y 6}]
+clj꞉asm.interpreter꞉> 
+[0 {:x 36, :y 6}]
+clj꞉asm.interpreter꞉> 
+[0 {:x 30, :y 6}]
+clj꞉asm.interpreter꞉> 
+[0 {:a 36, :b 6}]
+clj꞉asm.interpreter꞉> 
+[0 {:a 36, :b 6}]
+clj꞉asm.interpreter꞉> 
+[0 {:a 36, :b 6}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/return-value
+clj꞉asm.interpreter꞉> 
+{:a 36, :b 6, :internal-registers {:cmp :eq}}
+[0 {:a 36, :b 6}]
+clj꞉asm.interpreter꞉> 
+{:a 30, :b 6, :internal-registers {:cmp :lt}}
+[0 {:a 30, :b 6}]
+clj꞉asm.interpreter꞉> 
+{:a 30, :b 6, :internal-registers {:cmp :lt}}
+[0 {:a 30, :b 6}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+"Memory" {:registers {}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5, :b 6}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+{:a 30, :b 6, :internal-registers {:cmp :lt}}
+[0 {:a 30, :b 6}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/return-value
+clj꞉asm.interpreter꞉> 
+"Memory" {:registers {}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5, :b 6}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+[0 {:a 30, :b 6}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-jump
+clj꞉asm.interpreter꞉> 
+"Memory" {:registers {}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5, :b 6}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+"JMP" {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 30, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+[0 {:a 30, :b 6}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+"Memory" {:registers {}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5, :b 6}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+"JMP" {:a 5, :b 6, :internal-registers {:cmp :lt}}
+"Memory" {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+"Memory" {:registers {:a 5, :b 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack []}
+[0 {:a 5, :b 6}]
+clj꞉asm.interpreter꞉> 

@@ -36,7 +36,9 @@
 ;;                        This would store "5 is not equal to 6"
 ;; DONE: end        ::    indicates the program ends correctly, so output is returned. If this command isn't encountered
 ;;                        the program should return -1
-;; DONE;            ::    comments.
+;; DONE ;           ::    comments.
+;; pop :register    ::    Pops the top element off the stack into :register
+;; push x           ::    Pushes the value x (or the value of register x if x is a register.) onto the stack.
 ;; DONE:            ::    parser to parse from string to vector of instructions
 ;; DONE: Parser to parse out labels and eip locations into map
 ;; How to deal with ret and msg 'reg' ???? Still to figure out...
@@ -45,3 +47,10 @@
 (defn -main [& args]
   (->>   (parse args)
          (interpret)))
+
+(parse "mov a 5
+ mov b 6
+ mov c 7
+ push 4
+ push a
+ pop b")
