@@ -297,8 +297,7 @@
                                                      [:pop :c]
                                                      [:push :b]
                                                      [:pop :d]
-                                                     [:end]] true))))
-  )
+                                                     [:end]] true)))))
 
 (deftest setting-return-values
   (is (= ["x = 5, y = 6" {:x 5 :y 6}]

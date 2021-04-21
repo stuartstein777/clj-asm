@@ -227,36 +227,3 @@
                                       :else (:eip-stack memory))]
 
                   (recur new-eip (assoc memory :eip-stack eip-stack)))))))))
-
-(comment  (interpret [[:mov :x 5]
-                      [:mov :y 6]
-                      [:msg "x = " :x ", y = " :y]
-                      [:end]], true))
-
-(comment  (interpret [[:mov :x 5]
-                      [:mov :y 6]
-                      [:cmp :x :y]
-                      [:jne :foo]
-                      [:mul :x :y]
-                      [:end]
-                      [:label :foo]
-                      [:end]], true))
-
-(comment "jne jumps " (interpret [[:mov :a 6]
-                                  [:mov :b 6]
-                                  [:cmp :a :b]
-                                  [:jne :foo]
-                                  [:mul :a :b]
-                                  [:end]
-                                  [:label :foo]
-                                  [:end]], true))
-
-(comment (interpret [[:push 10]
-                     [:push 20]
-                     [:push 30]
-                     [:pop :a]
-                     [:pop :b]
-                     [:pop :c]
-                     [:push :b]
-                     [:pop :d]
-                     [:end]] true))
