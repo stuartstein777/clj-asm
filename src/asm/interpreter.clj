@@ -6,6 +6,7 @@
 ;; Otherwise return x (as it's a value not a register).
 ;;=======================================================================================================
 (defn get-value [registers x]
+  #_(prn "get value:: " registers x)
   (if (keyword? x)
     (get registers x)
     x))
@@ -154,7 +155,7 @@
 ;; Process regular instructions and return the new registers.
 ;;=======================================================================================================
 (defn process-instruction [instruction {:keys [registers stack] :as memory} args]
-  (prn "args::" args)
+  #_#_(prn "args::" args)
   (prn "memory::" registers stack)
   (cond (= :mov instruction)
         (let [[x y] args]
@@ -172,18 +173,18 @@
           (assoc memory :registers (cmp registers x y)))
 
         (= :pop instruction)
-        (-> memory
-            (assoc :registers (mov registers (first args) (peek stack)))
-            (update :stack pop))
+        (if (empty? stack)
+          (update-in memory [:internal-registers] assoc :err "Popped empty stack.")
+          (-> memory
+              (assoc :registers (mov registers (first args) (peek stack)))
+              (update :stack (if (empty? stack) identity pop))))
         
+        (= :push instruction)
+        (let [x (get-value registers (first args))]
+          (update memory :stack #(conj % x)))
+
         (= :msg instruction)
         (assoc memory :registers (apply (partial set-message registers) args))))
-
-(comment (process-instruction :pop
-                              {:registers {:b 10}, :eip-stack [], :stack [55]}
-                              :b))
-
-
 
 ;;=======================================================================================================
 ;; The interpreter.
@@ -199,8 +200,8 @@
 (defn interpret [instructions return-registers?]
   (let [symbol-table (build-symbol-table instructions)]
     (loop [eip 0
-           memory {:registers {} :eip-stack [] :stack [55]}]
-      (prn eip "::" memory)
+           memory {:registers {} :eip-stack [] :stack []}]
+      #_(prn eip "::" memory)
       ; if we have an eip that points after the last instruction exit with a -1 error code and
       ; show the registers (including internal registers).
       (if (or (= eip (count instructions)) (= eip -1))
@@ -250,4 +251,12 @@
                                   [:label :foo]
                                   [:end]], true))
 
-(interpret [[:pop :b]] true)
+(comment (interpret [[:push 10]
+                     [:push 20]
+                     [:push 30]
+                     [:pop :a]
+                     [:pop :b]
+                     [:pop :c]
+                     [:push :b]
+                     [:pop :d]
+                     [:end]] true))

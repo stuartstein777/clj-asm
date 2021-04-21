@@ -843,3 +843,264 @@ clj꞉asm.interpreter꞉> 
 3 "::" {:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}, :eip-stack [], :stack [55]}
 ["x = 5, y = 6" {:x 5, :y 6}]
 clj꞉asm.interpreter꞉> 
+; Syntax error compiling at (src/asm/interpreter.clj:189:10).
+; Unable to resolve symbol: stack in this context
+clj꞉asm.interpreter꞉> 
+"args::" :b
+"memory::" {:b 10} []
+nil
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+; Execution error (IllegalArgumentException) at asm.interpreter/process-instruction (form-init1520668051388414836.clj:180).
+; Don't know how to create ISeq from: clojure.lang.Keyword
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+; Execution error (IllegalArgumentException) at asm.interpreter/process-instruction (form-init1520668051388414836.clj:180).
+; Don't know how to create ISeq from: clojure.lang.Keyword
+clj꞉asm.interpreter꞉> 
+; Syntax error compiling at (src/asm/interpreter.clj:195:3).
+; Unable to resolve symbol: stack in this context
+clj꞉asm.interpreter꞉> 
+; Execution error (IllegalArgumentException) at asm.interpreter/eval8565 (form-init1520668051388414836.clj:195).
+; Don't know how to create ISeq from: clojure.core$conj__5390
+clj꞉asm.interpreter꞉> 
+; Execution error (ArityException) at asm.interpreter/eval8569 (form-init1520668051388414836.clj:195).
+; Wrong number of args (2) passed to: clojure.core/update-in
+clj꞉asm.interpreter꞉> 
+; Execution error (ArityException) at asm.interpreter/eval8575 (form-init1520668051388414836.clj:195).
+; Wrong number of args (2) passed to: clojure.core/update
+clj꞉asm.interpreter꞉> 
+{:registers {:b 10}, :eip-stack [], :stack [10]}
+clj꞉asm.interpreter꞉> 
+; Execution error (IllegalArgumentException) at asm.interpreter/process-instruction (form-init1520668051388414836.clj:180).
+; Don't know how to create ISeq from: clojure.lang.Keyword
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+; Execution error (IllegalArgumentException) at asm.interpreter/process-instruction$fn (form-init1520668051388414836.clj:180).
+; Don't know how to create ISeq from: clojure.lang.Keyword
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+; Execution error (IllegalArgumentException) at asm.interpreter/process-instruction (form-init1520668051388414836.clj:180).
+; Don't know how to create ISeq from: clojure.lang.Keyword
+clj꞉asm.interpreter꞉> 
+; Syntax error compiling at (src/asm/interpreter.clj:196:34).
+; Unable to resolve symbol: registers in this context
+clj꞉asm.interpreter꞉> 
+{:registers {:b 10}, :eip-stack [], :stack [10]}
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/get-value
+clj꞉asm.interpreter꞉> 
+; Execution error (IllegalArgumentException) at asm.interpreter/process-instruction (form-init1520668051388414836.clj:180).
+; Don't know how to create ISeq from: clojure.lang.Keyword
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/get-value
+clj꞉asm.interpreter꞉> 
+; Execution error (IllegalArgumentException) at asm.interpreter/process-instruction (form-init1520668051388414836.clj:176).
+; Don't know how to create ISeq from: clojure.lang.Keyword
+clj꞉asm.interpreter꞉> 
+; Execution error (IllegalArgumentException) at asm.interpreter/process-instruction (form-init1520668051388414836.clj:180).
+; Don't know how to create ISeq from: clojure.lang.Keyword
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+; Execution error (IllegalArgumentException) at asm.interpreter/process-instruction (form-init1520668051388414836.clj:177).
+; Don't know how to create ISeq from: clojure.lang.Keyword
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+"args::" :b
+"memory::" {:b 10} [55]
+; Execution error (IllegalArgumentException) at asm.interpreter/process-instruction (form-init1520668051388414836.clj:177).
+; Don't know how to create ISeq from: clojure.lang.Keyword
+clj꞉asm.interpreter꞉> 
+"args::" :b
+"memory::" {:b 10} []
+nil
+clj꞉asm.interpreter꞉> 
+"get value:: " {:b 10} :b
+{:registers {:b 10}, :eip-stack [], :stack [10]}
+clj꞉asm.interpreter꞉> 
+"args::" :b
+"memory::" {:b 10} []
+nil
+clj꞉asm.interpreter꞉> 
+"args::" :b
+"memory::" {:b 10} [55]
+; Execution error (IllegalArgumentException) at asm.interpreter/process-instruction (form-init1520668051388414836.clj:177).
+; Don't know how to create ISeq from: clojure.lang.Keyword
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+"args::" :b
+"memory::" {:b 10} [55]
+nil
+clj꞉asm.interpreter꞉> 
+"args::" :b
+"memory::" {:b 10} []
+nil
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+"args::" :b
+"memory::" {:b 10} [55]
+{:registers {:b 10}, :eip-stack [], :stack [55]}
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+"args::" :b
+"memory::" {:b 10} [55]
+; Execution error (IllegalArgumentException) at asm.interpreter/process-instruction (form-init1520668051388414836.clj:177).
+; Don't know how to create ISeq from: clojure.lang.Keyword
+clj꞉asm.interpreter꞉> 
+"args::" :b
+"memory::" {:b 10} [55]
+; Execution error (IllegalArgumentException) at asm.interpreter/process-instruction (form-init1520668051388414836.clj:177).
+; Don't know how to create ISeq from: clojure.lang.Keyword
+clj꞉asm.interpreter꞉> 
+55
+clj꞉asm.interpreter꞉> 
+"args::" [:b]
+"memory::" {:b 10} [55]
+"get value:: " {:b 10} 55
+{:registers {:b 55}, :eip-stack [], :stack [55]}
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+"args::" [:b]
+"memory::" {:b 10} [55]
+"get value:: " {:b 10} 55
+{:registers {:b 55}, :eip-stack [], :stack []}
+clj꞉asm.interpreter꞉> 
+"args::" [:b]
+"memory::" {:b 10} []
+"get value:: " {:b 10} :b
+{:registers {:b 10}, :eip-stack [], :stack [10]}
+clj꞉asm.interpreter꞉> 
+"args::" [55]
+"memory::" {:b 10} []
+"get value:: " {:b 10} 55
+{:registers {:b 10}, :eip-stack [], :stack [55]}
+clj꞉asm.interpreter꞉> 
+0 "::" {:registers {}, :eip-stack [], :stack [55]}
+"args::" (:b)
+"memory::" {} [55]
+"get value:: " {} 55
+1 "::" {:registers {:b 55}, :eip-stack [], :stack []}
+[-1 {:b 55}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+"args::" (:b)
+"memory::" {} []
+"get value:: " {} nil
+; Execution error (IllegalStateException) at asm.interpreter/process-instruction (form-init1520668051388414836.clj:178).
+; Can't pop empty vector
+clj꞉asm.interpreter꞉> 
+nil
+clj꞉asm.interpreter꞉> 
+"args::" (10)
+"memory::" {} []
+"get value:: " {} 10
+[-1 {}]
+clj꞉asm.interpreter꞉> 
+"args::" (10)
+"memory::" {} []
+"get value:: " {} 10
+"args::" (:a)
+"memory::" {} [10]
+"get value:: " {} 10
+[-1 {:a 10}]
+clj꞉asm.interpreter꞉> 
+"args::" (:a)
+"memory::" {} []
+"get value:: " {} nil
+; Execution error (IllegalStateException) at asm.interpreter/process-instruction (form-init1520668051388414836.clj:178).
+; Can't pop empty vector
+clj꞉asm.interpreter꞉> 
+; Execution error (IllegalStateException) at asm.interpreter/eval8815 (form-init1520668051388414836.clj:253).
+; Can't pop empty vector
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+"args::" (:a)
+"memory::" {} []
+"get value:: " {} nil
+[-1 {:a nil}]
+clj꞉asm.interpreter꞉> 
+; Syntax error compiling at (src/asm/interpreter.clj:191:3).
+; Unable to resolve symbol: registers in this context
+clj꞉asm.interpreter꞉> 
+; Execution error (ClassCastException) at asm.interpreter/eval8905 (form-init1520668051388414836.clj:191).
+; class java.lang.String cannot be cast to class clojure.lang.IFn (java.lang.String is in module java.base of loader 'bootstrap'; clojure.lang.IFn is in unnamed module of loader 'app')
+clj꞉asm.interpreter꞉> 
+; Execution error (ArityException) at asm.interpreter/eval8907 (form-init1520668051388414836.clj:191).
+; Wrong number of args (2) passed to: clojure.core/assoc--5416
+clj꞉asm.interpreter꞉> 
+{:registers {:internal-registers {:err "Popped empty stack"}}}
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+"args::" (:a)
+"memory::" {} []
+[-1 {}]
+clj꞉asm.interpreter꞉> 
+"args::" (:a)
+"memory::" {} []
+"get value:: " {} :a
+[-1 {}]
+clj꞉asm.interpreter꞉> 
+"args::" (:a)
+"memory::" {} []
+"get value:: " {} :a
+[0 {}]
+clj꞉asm.interpreter꞉> 
+"args::" (10)
+"memory::" {} []
+"get value:: " {} 10
+"args::" (20)
+"memory::" {} [10]
+"get value:: " {} 20
+"args::" (30)
+"memory::" {} [10 20]
+"get value:: " {} 30
+"args::" (:a)
+"memory::" {} [10 20 30]
+"get value:: " {} 30
+"args::" (:b)
+"memory::" {:a 30} [10 20]
+"get value:: " {:a 30} 20
+"args::" (:c)
+"memory::" {:a 30, :b 20} [10]
+"get value:: " {:a 30, :b 20} 10
+[0 {:a 30, :b 20, :c 10}]
+clj꞉asm.interpreter꞉> 
+"args::" (10)
+"memory::" {} []
+"get value:: " {} 10
+"args::" (20)
+"memory::" {} [10]
+"get value:: " {} 20
+"args::" (30)
+"memory::" {} [10 20]
+"get value:: " {} 30
+"args::" (:a)
+"memory::" {} [10 20 30]
+"get value:: " {} 30
+"args::" (:b)
+"memory::" {:a 30} [10 20]
+"get value:: " {:a 30} 20
+"args::" (:c)
+"memory::" {:a 30, :b 20} [10]
+"get value:: " {:a 30, :b 20} 10
+"args::" (:b)
+"memory::" {:a 30, :b 20, :c 10} []
+"get value:: " {:a 30, :b 20, :c 10} :b
+"args::" (:d)
+"memory::" {:a 30, :b 20, :c 10} [20]
+"get value:: " {:a 30, :b 20, :c 10} 20
+[0 {:a 30, :b 20, :c 10, :d 20}]
+clj꞉asm.interpreter꞉> 
