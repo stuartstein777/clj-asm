@@ -681,3 +681,165 @@ clj꞉asm.interpreter꞉> 
 "Memory" {:registers {:a 36, :b 6, :internal-registers {:cmp :eq}}, :eip-stack [], :stack []}
 [0 {:a 36, :b 6}]
 clj꞉asm.interpreter꞉> 
+; Execution error (ArityException) at asm.interpreter/eval8385 (form-init1520668051388414836.clj:244).
+; Wrong number of args (1) passed to: asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+; Execution error (ArityException) at asm.interpreter/eval8387 (form-init1520668051388414836.clj:244).
+; Wrong number of args (1) passed to: asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+"Memory" {:registers {}, :eip-stack [], :stack []}
+"Memory" {:registers {}, :eip-stack [], :stack []}
+[-1 {}]
+clj꞉asm.interpreter꞉> 
+"Memory" {:registers {}, :eip-stack [], :stack []}
+"Memory" {:registers {:b 0}, :eip-stack [], :stack []}
+"Memory" {:registers {:b 0}, :eip-stack [], :stack []}
+[-1 {:b 0}]
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/interpret
+clj꞉asm.interpreter꞉> 
+0 "::" {:registers {}, :eip-stack [], :stack [55]}
+1 "::" {:registers {}, :eip-stack [], :stack [55], :b 0}
+2 "::" {:eip-stack nil}
+[-1 nil]
+clj꞉asm.interpreter꞉> 
+nil
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+{:registers {:b []}, :eip-stack [], :stack [55]}
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+{} [55]
+{:registers {:b []}, :eip-stack [], :stack [55]}
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+{} [55]
+{:registers {:b []}, :eip-stack [], :stack []}
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+"memory::" {} [55]
+{:registers {:b []}, :eip-stack [], :stack []}
+clj꞉asm.interpreter꞉> 
+[]
+clj꞉asm.interpreter꞉> 
+55
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+"memory::" {} [55]
+{:registers {:b 55}, :eip-stack [], :stack []}
+clj꞉asm.interpreter꞉> 
+0 "::" {:registers {}, :eip-stack [], :stack [55]}
+"memory::" {} [55]
+1 "::" {:registers {:b 0}, :eip-stack [], :stack [55]}
+"memory::" {:b 0} [55]
+2 "::" {:registers {:b 0, (:b) 55}, :eip-stack [], :stack []}
+[-1 {:b 0, (:b) 55}]
+clj꞉asm.interpreter꞉> 
+0 "::" {:registers {}, :eip-stack [], :stack [55]}
+"memory::" {} [55]
+1 "::" {:registers {:b 0}, :eip-stack [], :stack [55]}
+"memory::" {:b 0} [55]
+2 "::" {:registers {:b 0, (:b) 55}, :eip-stack [], :stack []}
+[-1 {:b 0, (:b) 55}]
+clj꞉asm.interpreter꞉> 
+"memory::" {} [55]
+{:registers {:b 55}, :eip-stack [], :stack []}
+clj꞉asm.interpreter꞉> 
+"memory::" {:b 10} [55]
+{:registers {:b 55}, :eip-stack [], :stack []}
+clj꞉asm.interpreter꞉> 
+"memory::" {:b 10} [55]
+{:registers {:b 55}, :eip-stack [], :stack []}
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+"args::" :b
+"memory::" {:b 10} [55]
+{:registers {:b 55}, :eip-stack [], :stack []}
+clj꞉asm.interpreter꞉> 
+0 "::" {:registers {}, :eip-stack [], :stack [55]}
+"args::" (:b 0)
+"memory::" {} [55]
+1 "::" {:registers {:b 0}, :eip-stack [], :stack [55]}
+"args::" (:b)
+"memory::" {:b 0} [55]
+2 "::" {:registers {:b 0, (:b) 55}, :eip-stack [], :stack []}
+[-1 {:b 0, (:b) 55}]
+clj꞉asm.interpreter꞉> 
+0 "::" {:registers {}, :eip-stack [], :stack [55]}
+"args::" (:b)
+"memory::" {} [55]
+1 "::" {:registers {(:b) 55}, :eip-stack [], :stack []}
+[-1 {(:b) 55}]
+clj꞉asm.interpreter꞉> 
+"args::" :b
+"memory::" {:b 10} [55]
+{:registers {:b 55}, :eip-stack [], :stack []}
+clj꞉asm.interpreter꞉> 
+0 "::" {:registers {}, :eip-stack [], :stack [55]}
+"args::" (:b)
+"memory::" {} [55]
+1 "::" {:registers {(:b) 55}, :eip-stack [], :stack []}
+[-1 {(:b) 55}]
+clj꞉asm.interpreter꞉> 
+"args::" :b
+"memory::" {:b 10} [55]
+{:registers {:b 55}, :eip-stack [], :stack []}
+clj꞉asm.interpreter꞉> 
+#'asm.interpreter/process-instruction
+clj꞉asm.interpreter꞉> 
+0 "::" {:registers {}, :eip-stack [], :stack [55]}
+"args::" (:b)
+"memory::" {} [55]
+1 "::" {:registers {:b 55}, :eip-stack [], :stack []}
+[-1 {:b 55}]
+clj꞉asm.interpreter꞉> 
+0 "::" {:registers {}, :eip-stack [], :stack [55]}
+"args::" (:a 6)
+"memory::" {} [55]
+1 "::" {:registers {:a 6}, :eip-stack [], :stack [55]}
+"args::" (:b 6)
+"memory::" {:a 6} [55]
+2 "::" {:registers {:a 6, :b 6}, :eip-stack [], :stack [55]}
+"args::" (:a :b)
+"memory::" {:a 6, :b 6} [55]
+3 "::" {:registers {:a 6, :b 6, :internal-registers {:cmp :eq}}, :eip-stack [], :stack [55]}
+"JMP" {:a 6, :b 6, :internal-registers {:cmp :eq}}
+4 "::" {:registers {:a 6, :b 6, :internal-registers {:cmp :eq}}, :eip-stack [], :stack [55]}
+"args::" (:a :b)
+"memory::" {:a 6, :b 6, :internal-registers {:cmp :eq}} [55]
+5 "::" {:registers {:a 36, :b 6, :internal-registers {:cmp :eq}}, :eip-stack [], :stack [55]}
+[0 {:a 36, :b 6}]
+clj꞉asm.interpreter꞉> 
+0 "::" {:registers {}, :eip-stack [], :stack [55]}
+"args::" (:x 5)
+"memory::" {} [55]
+1 "::" {:registers {:x 5}, :eip-stack [], :stack [55]}
+"args::" (:y 6)
+"memory::" {:x 5} [55]
+2 "::" {:registers {:x 5, :y 6}, :eip-stack [], :stack [55]}
+"args::" (:x :y)
+"memory::" {:x 5, :y 6} [55]
+3 "::" {:registers {:x 5, :y 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack [55]}
+"JMP" {:x 5, :y 6, :internal-registers {:cmp :lt}}
+6 "::" {:registers {:x 5, :y 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack [55]}
+7 "::" {:registers {:x 5, :y 6, :internal-registers {:cmp :lt}}, :eip-stack [], :stack [55]}
+[0 {:x 5, :y 6}]
+clj꞉asm.interpreter꞉> 
+0 "::" {:registers {}, :eip-stack [], :stack [55]}
+"args::" (:x 5)
+"memory::" {} [55]
+1 "::" {:registers {:x 5}, :eip-stack [], :stack [55]}
+"args::" (:y 6)
+"memory::" {:x 5} [55]
+2 "::" {:registers {:x 5, :y 6}, :eip-stack [], :stack [55]}
+"args::" ("x = " :x ", y = " :y)
+"memory::" {:x 5, :y 6} [55]
+3 "::" {:registers {:x 5, :y 6, :internal-registers {:return-code "x = 5, y = 6"}}, :eip-stack [], :stack [55]}
+["x = 5, y = 6" {:x 5, :y 6}]
+clj꞉asm.interpreter꞉> 

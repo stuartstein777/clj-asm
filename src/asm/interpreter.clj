@@ -153,7 +153,9 @@
 ;;=======================================================================================================
 ;; Process regular instructions and return the new registers.
 ;;=======================================================================================================
-(defn process-instruction [instruction {:keys [registers] :as memory} args]
+(defn process-instruction [instruction {:keys [registers stack] :as memory} args]
+  (prn "args::" args)
+  (prn "memory::" registers stack)
   (cond (= :mov instruction)
         (let [[x y] args]
           (assoc memory :registers (mov registers x y)))
@@ -169,8 +171,19 @@
         (let [[x y] args]
           (assoc memory :registers (cmp registers x y)))
 
+        (= :pop instruction)
+        (-> memory
+            (assoc :registers (mov registers (first args) (peek stack)))
+            (update :stack pop))
+        
         (= :msg instruction)
         (assoc memory :registers (apply (partial set-message registers) args))))
+
+(comment (process-instruction :pop
+                              {:registers {:b 10}, :eip-stack [], :stack [55]}
+                              :b))
+
+
 
 ;;=======================================================================================================
 ;; The interpreter.
@@ -186,8 +199,8 @@
 (defn interpret [instructions return-registers?]
   (let [symbol-table (build-symbol-table instructions)]
     (loop [eip 0
-           memory {:registers {} :eip-stack [] :stack []}]
-      #_(prn eip "::" memory)
+           memory {:registers {} :eip-stack [] :stack [55]}]
+      (prn eip "::" memory)
       ; if we have an eip that points after the last instruction exit with a -1 error code and
       ; show the registers (including internal registers).
       (if (or (= eip (count instructions)) (= eip -1))
@@ -236,3 +249,5 @@
                                   [:end]
                                   [:label :foo]
                                   [:end]], true))
+
+(interpret [[:pop :b]] true)
