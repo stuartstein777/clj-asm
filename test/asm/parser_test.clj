@@ -1,6 +1,6 @@
 (ns asm.parser-test
-  (:require [clojure.test :refer :all]
-            [asm.parser :refer :all]))
+  (:require [clojure.test :refer [deftest testing is]]
+            [asm.parser :refer [parse to-keywords is-register? parse-msg scrub-comments build-symbol-table]]))
 
 (deftest to-keywords-tests
   (testing "[mov a 5] to [:mov :a 5]"
@@ -31,7 +31,7 @@
     (is (false? (is-register? "-1")))))
 
 (deftest parsing-tests
-  (testing "complex parsing 1"
+  (testing "parsing function calls"
     (is (= [[:mov :a 5]
             [:inc :a]
             [:call :function]

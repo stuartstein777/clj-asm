@@ -1,6 +1,6 @@
 (ns asm.interpreter-tests
-  (:require [clojure.test :refer :all]
-            [asm.interpreter :refer :all]))
+  (:require [clojure.test :refer  [deftest testing is]]
+            [asm.interpreter :refer [mov interpret]]))
 
 (deftest mov-tests
   (is (= {:a 5}       (mov {} :a 5)))
